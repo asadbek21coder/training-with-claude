@@ -25,6 +25,38 @@
 | **single point of failure** | one component whose failure kills the whole system |
 | **fault tolerance** | system's ability to continue working when something fails |
 | **leaf node** | tree node with no children |
+| **cache** (noun/verb) | pronounced "cash" — temporary fast storage |
+| **replica** | a copy of the database for reading |
+| **database instance** | a running copy of a database |
+| **frequently accessed data** | data that gets read often |
+| **query the database** | send a request to the database to get data |
+| **stale data** | outdated data that no longer reflects the current state |
+| **cache invalidation** | removing or updating outdated data in the cache |
+| **edge server** | CDN server located close to users geographically |
+| **origin server** | the main server where original data lives |
+| **cache busting** | changing filename (with hash/version) to bypass cached version |
+| **propagate** | spread across all servers (invalidation propagates to all edges) |
+| **break the logic** | cause logical errors in the system (not "crash on logic") |
+| **verify** | confirm something is correct before proceeding |
+| **double-booking** | two users reserving the same resource (seat, room) |
+| **data storage** | where/how data is saved (not "data restoring" — that means recovering) |
+| **schema** | the predefined structure of a database table |
+| **flexible schema** | structure that can vary per record (NoSQL) |
+| **read-heavy** | system where reads far outnumber writes |
+| **write-heavy** | system where writes are the bottleneck |
+| **polyglot persistence** | using different databases for different use cases |
+| **ACID** | Atomicity, Consistency, Isolation, Durability — transaction guarantees |
+| **sequential** | in order, one after another (not "synchrone") |
+| **shard** | a piece of data split across multiple databases |
+| **hot spot** | one server getting much more traffic than others |
+| **up to a certain scale** | works until traffic/data reaches a limit (not "until some level") |
+| **this is where X helps** | introducing a solution (not "there can help X") |
+| **acknowledgment** | confirmation that a message was received and processed |
+| **idempotent** | safe to run multiple times — same result every time |
+| **at-least-once delivery** | message is retried until acknowledged — may deliver twice |
+| **fire and forget** | send and don't check if it was processed |
+| **undirected** | connection goes both ways (not "undericted") |
+| **vertex / vertices** | a node in a graph (plural: vertices, not vertexes) |
 
 ## Collocations
 

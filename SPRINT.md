@@ -106,14 +106,14 @@ Legend: ✅ done | 🔄 in progress | ⬜ todo
 
 ---
 
-### 1.6 Graph ⬜
+### 1.6 Graph 🔄
 **Concepts — can you answer these?**
-- [ ] What is a directed vs undirected graph?
-- [ ] What is an adjacency list vs adjacency matrix?
-- [ ] How does BFS work? When do you use it?
-- [ ] How does DFS work? When do you use it?
+- [x] What is a directed vs undirected graph?
+- [x] What is an adjacency list vs adjacency matrix?
+- [x] How does BFS work? When do you use it?
+- [x] How does DFS work? When do you use it?
 - [ ] What is topological sort and when do you use it?
-- [ ] What is a visited set and why do you need it?
+- [x] What is a visited set and why do you need it?
 
 **Coding problems**
 - [ ] Number of islands (BFS or DFS on grid)
@@ -124,15 +124,15 @@ Legend: ✅ done | 🔄 in progress | ⬜ todo
 
 ---
 
-### 1.7 Binary Search ⬜
+### 1.7 Binary Search 🔄
 **Concepts — can you answer these?**
-- [ ] What are the conditions for binary search to work?
-- [ ] What is the loop condition — `<` or `<=`?
-- [ ] How do you avoid infinite loops with mid calculation?
-- [ ] When do you use `left = mid + 1` vs `left = mid`?
+- [x] What are the conditions for binary search to work?
+- [x] What is the loop condition — `<` or `<=`?
+- [x] How do you avoid infinite loops with mid calculation?
+- [x] When do you use `left = mid + 1` vs `left = mid`?
 
 **Coding problems**
-- [ ] Classic binary search (find target in sorted array)
+- [x] Classic binary search (find target in sorted array)
 - [ ] Search in rotated sorted array
 - [ ] Find first and last position of element
 - [ ] Find minimum in rotated sorted array
@@ -140,11 +140,11 @@ Legend: ✅ done | 🔄 in progress | ⬜ todo
 
 ---
 
-### 1.8 Heap / Priority Queue ⬜
+### 1.8 Heap / Priority Queue 🔄
 **Concepts — can you answer these?**
-- [ ] What is a min heap vs max heap?
-- [ ] How does insert and extract work in a heap?
-- [ ] What is the time complexity of heap operations?
+- [x] What is a min heap vs max heap?
+- [x] How does insert and extract work in a heap?
+- [x] What is the time complexity of heap operations?
 - [ ] How do you use Go's `container/heap`?
 
 **Coding problems**
@@ -198,19 +198,19 @@ Legend: ✅ done | 🔄 in progress | ⬜ todo
 
 ## Phase 2 — System Design
 
-### 2.1 Fundamentals ⬜
-- [ ] Vertical vs horizontal scaling
-- [ ] Load balancer — what it does, types (round robin, least connections)
-- [ ] CDN — what it does and when to use
-- [ ] Caching — write-through vs write-back vs write-around
-- [ ] Cache eviction — LRU, LFU, TTL
-- [ ] CAP theorem — consistency, availability, partition tolerance
-- [ ] SQL vs NoSQL — when to use which
-- [ ] Database replication — primary/replica, read replicas
-- [ ] Database sharding — what it is, horizontal vs vertical
-- [ ] Consistent hashing — why it matters for sharding
-- [ ] Message queues — what problems they solve, at-least-once vs exactly-once
-- [ ] Rate limiting strategies — token bucket, sliding window
+### 2.1 Fundamentals ✅
+- [x] Vertical vs horizontal scaling
+- [x] Load balancer — what it does, types (round robin, least connections)
+- [x] CDN — what it does and when to use
+- [x] Caching — write-through vs write-back vs write-around
+- [x] Cache eviction — LRU, LFU, TTL
+- [x] CAP theorem — consistency, availability, partition tolerance
+- [x] SQL vs NoSQL — when to use which
+- [x] Database replication — primary/replica, read replicas
+- [x] Database sharding — what it is, horizontal vs vertical
+- [x] Consistent hashing — why it matters for sharding
+- [x] Message queues — what problems they solve, at-least-once vs exactly-once
+- [x] Rate limiting strategies — token bucket, sliding window
 
 ### 2.2 Practice Designs ⬜
 - [ ] Design URL shortener
@@ -296,7 +296,7 @@ Legend: ✅ done | 🔄 in progress | ⬜ todo
 | Phase | Topics | Done |
 |-------|--------|------|
 | DS & Algo | 11 topics | 4 / 11 (in progress) |
-| System Design | 2 sections | 0 / 2 |
+| System Design | 2 sections | 1 / 2 |
 | Go Internals | 2 sections | 0 / 2 |
 | PostgreSQL | 3 sections | 0 / 3 |
 | Behavioral | 7 questions | 0 / 7 |

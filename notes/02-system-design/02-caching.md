@@ -102,7 +102,7 @@ WRITE:
   2. Delete from cache (invalidate)
   3. Next read repopulates from fresh DB data
 ```
-
+  
 Pros: only caches what is actually read, simple
 Cons: first read after invalidation is always a cache miss (slightly slow)
 
