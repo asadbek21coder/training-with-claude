@@ -29,8 +29,11 @@ Progress is tracked in SPRINT.md. Russian roadmap is in russian/ROADMAP.md.
 - Focus corrections on: cases, verb aspect, gender agreement (user's weak points)
 - During Russian practice sessions, give more detailed corrections
 
-### Bilingual Notes
-All technical explanations, notes, and senior-level answers should be in both English and Russian.
+### Bilingual Rule
+- All explanations must be in BOTH English and Russian — every concept, every rule, every example
+- When teaching Russian grammar: explain in English first, then give the Russian version
+- When teaching technical topics: give explanations and senior answers in both languages
+- Notes files should contain both languages
 
 ## Code Rules
 - Never write implementations — only function signatures with TODO

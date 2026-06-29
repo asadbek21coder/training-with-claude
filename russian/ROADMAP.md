@@ -23,12 +23,12 @@ The #1 priority. Cases change word endings based on the role in the sentence.
 | 6 | Предложный (Prepositional) | О ком? О чём? | Говорю о **программисте** | About, in, at (always with a preposition) |
 
 **Learning order (by usefulness):**
-- [ ] Именительный — already know (basic form)
-- [ ] Винительный — most common, direct objects ("я вижу задачу")
-- [ ] Предложный — location, topic ("в офисе", "о проекте")
-- [ ] Родительный — "нет чего", possession ("код сервера")
-- [ ] Дательный — "кому" ("отправь мне", "помоги команде")
-- [ ] Творительный — "чем/кем" ("работаю программистом")
+- [x] Именительный — already know (basic form)
+- [x] Винительный — most common, direct objects ("я вижу задачу")
+- [x] Предложный — location, topic ("в офисе", "о проекте")
+- [x] Родительный — "нет чего", possession ("код сервера")
+- [x] Дательный — "кому" ("отправь мне", "помоги команде")
+- [x] Творительный — "чем/кем" ("работаю программистом")
 - [ ] Case endings for masculine, feminine, neuter nouns
 - [ ] Case endings for adjectives (большой → большого → большому...)
 - [ ] Case endings for pronouns (я → меня → мне → мной)
