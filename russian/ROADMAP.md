@@ -107,10 +107,10 @@ Each preposition requires a specific case.
 | перед + Instrumental | | before | **перед** релизом |
 | после + Genitive | | after | **после** деплоя |
 
-- [ ] в/на + movement (Accusative) vs location (Prepositional)
+- [x] в/на + movement (Accusative) vs location (Prepositional)
 - [ ] с + Instrumental (with) vs с + Genitive (from)
-- [ ] Most common prepositions in work context
-- [ ] Practice: forming phrases with prepositions
+- [x] Most common prepositions in work context
+- [x] Practice: forming phrases with prepositions
 
 ---
 

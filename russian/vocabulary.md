@@ -21,6 +21,21 @@
 | У меня есть вопрос | U menya yest vopros | I have a question |
 | Давай обсудим это на дейлике | Davay obsudim eto na deylike | Let's discuss this on the daily |
 | Я не уверен в архитектуре | Ya ne uveren v arkhitekture | I'm not sure about the architecture |
+| Отправь ссылку разработчику | Otprav ssylku razrabotchiku | Send the link to the developer |
+| Залей изменения на ветку | Zaley izmeneniya na vetku | Push changes to the branch |
+| Перенеси задачу в следующий спринт | Perenesi zadachu v sleduyushiy sprint | Move the task to the next sprint |
+| Баг на продакшене | Bag na prodakshene | Bug in production |
+
+## в vs на — Quick Reference (Быстрая шпаргалка)
+
+| в (container / контейнер) | на (platform/event / платформа/событие) |
+|---|---|
+| в коде (in code) | на сервере (on server) |
+| в базе данных (in DB) | на продакшене (in prod) |
+| в файле (in file) | на созвоне (at standup) |
+| в спринте (in sprint) | на встрече (at meeting) |
+| в проекте (in project) | на экране (on screen) |
+| в Слаке (in Slack) | на работе (at work) |
 
 ## Nouns — Gender Guide
 
