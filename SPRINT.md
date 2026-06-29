@@ -133,10 +133,10 @@ Legend: ✅ done | 🔄 in progress | ⬜ todo
 
 **Coding problems**
 - [x] Classic binary search (find target in sorted array)
+- [x] Search insert position
 - [ ] Search in rotated sorted array
 - [ ] Find first and last position of element
 - [ ] Find minimum in rotated sorted array
-- [ ] Search a 2D matrix
 
 ---
 
@@ -212,82 +212,448 @@ Legend: ✅ done | 🔄 in progress | ⬜ todo
 - [x] Message queues — what problems they solve, at-least-once vs exactly-once
 - [x] Rate limiting strategies — token bucket, sliding window
 
-### 2.2 Practice Designs ⬜
+### 2.2 Distributed Systems ⬜
+- [ ] Partial failure and network request ambiguity
+- [ ] Timeout, retry, exponential backoff and jitter
+- [ ] Idempotency and duplicate request handling
+- [ ] Eventual vs strong consistency
+- [ ] Circuit breaker and bulkhead patterns
+- [ ] Rate limiting, load shedding, backpressure
+- [ ] Distributed lock limitations
+- [ ] Clock and timestamp problems
+
+### 2.3 Practice Designs ⬜
 - [ ] Design URL shortener
 - [ ] Design rate limiter
-- [ ] Design Twitter/Instagram feed (news feed system)
 - [ ] Design notification system (email/push/SMS)
-- [ ] Design key-value store (like Redis)
-- [ ] Design a cache system
+- [ ] Design file storage service
+- [ ] Design authentication service
+- [ ] Design payment/order service
+- [ ] Design audit log service
+- [ ] Design job scheduler or webhook delivery service
 
 ---
 
-## Phase 3 — Go Internals
+## Phase 3 — Go Core
 
-### 3.1 Concurrency ⬜
-- [ ] Goroutine vs OS thread — what is the difference?
-- [ ] How does Go scheduler work (M:N threading model)?
-- [ ] Buffered vs unbuffered channel — when to use each?
-- [ ] What happens when you send to a closed channel?
-- [ ] What is select and how does it work?
-- [ ] What is context and how do you use it for cancellation?
-- [ ] sync.WaitGroup — how and when to use
-- [ ] sync.Once — what problem it solves
-- [ ] What is a data race? How do you detect it?
+### 3.1 Go Basics ⬜
+- [ ] Zero value concept
+- [ ] Named type vs type alias
+- [ ] Constants and `iota`
+- [ ] `rune` vs `byte`, UTF-8 string handling
+- [ ] Value semantics vs pointer semantics
+- [ ] Pointer receiver vs value receiver
+- [ ] Array vs slice internals (len, cap, backing array)
+- [ ] `append` behavior when cap is full
+- [ ] Nil slice vs empty slice
+- [ ] Map concurrent safety, `sync.Map`
+- [ ] Struct embedding and composition
+- [ ] Functional options pattern
+- [ ] Implicit interface implementation
+- [ ] Type assertion and type switch
+- [ ] Nil interface vs typed nil problem
+- [ ] Closure and variadic functions
+- [ ] `defer`, `panic`, `recover`
+- [ ] Generics — when to use vs interfaces
 
-**Coding problems**
-- [ ] Fan-out pattern (one input, multiple workers)
-- [ ] Fan-in pattern (multiple inputs, one output)
-- [ ] Timeout using context
-- [ ] Worker pool with fixed number of goroutines
+### 3.2 Error Handling ⬜
+- [ ] `errors.New` vs `fmt.Errorf`
+- [ ] Error wrapping with `%w`
+- [ ] `errors.Is` and `errors.As`
+- [ ] Sentinel errors
+- [ ] Custom error types
+- [ ] Error classification (validation, auth, conflict, internal)
+- [ ] Repository errors → domain errors mapping
+- [ ] Error → HTTP status code mapping
+- [ ] Which layer logs the error
+- [ ] Never expose sensitive error info to client
 
-### 3.2 Language internals ⬜
-- [ ] How does Go garbage collector work (basics)?
-- [ ] What is an interface internally? (type + pointer)
-- [ ] What is the nil interface gotcha?
-- [ ] How does defer work with return values?
-- [ ] Difference between panic and error
-- [ ] When to use pointer receiver vs value receiver?
-- [ ] What is escape analysis?
+### 3.3 Context ⬜
+- [ ] `context.Context` purpose
+- [ ] `Background()` vs `TODO()`
+- [ ] `WithCancel`, `WithTimeout`, `WithDeadline`
+- [ ] Cancellation propagation
+- [ ] Passing context from HTTP handler to repository
+- [ ] Canceling DB and external HTTP requests via context
+- [ ] Context value — proper usage and custom key types
+- [ ] Why not store context in struct fields
+
+### 3.4 Concurrency ⬜
+- [ ] Goroutine vs OS thread
+- [ ] Goroutine leak — what it is and how to prevent
+- [ ] G-M-P scheduler model (basics)
+- [ ] Unbuffered vs buffered channels
+- [ ] Channel send/receive blocking behavior
+- [ ] Who should close the channel
+- [ ] Nil and closed channel behavior
+- [ ] `select` and timeout patterns
+- [ ] `sync.Mutex` and `sync.RWMutex`
+- [ ] Deadlock vs data race
+- [ ] `sync.WaitGroup`, `sync.Once`, `sync.Pool`
+- [ ] `sync/atomic`
+- [ ] Worker pool pattern
+- [ ] Fan-in, fan-out, pipeline patterns
+- [ ] Semaphore for concurrency limiting
+- [ ] Backpressure concept
+- [ ] Graceful shutdown
+- [ ] `errgroup` usage
+- [ ] `go test -race`
+
+### 3.5 Language Internals ⬜
+- [ ] Go garbage collector basics
+- [ ] Interface internally (type + pointer)
+- [ ] Nil interface gotcha
+- [ ] How defer works with return values
+- [ ] panic vs error
+- [ ] Escape analysis
+- [ ] Stack vs heap allocation
+
+### 3.6 Standard Library ⬜
+- [ ] `fmt`, `strings`, `strconv`, `bytes`
+- [ ] `io`, `os`, `path/filepath`
+- [ ] `time`, `errors`, `context`, `sync`
+- [ ] `encoding/json` — custom marshal/unmarshal, reject unknown fields
+- [ ] `net/http` and `database/sql` basics
+- [ ] `log/slog` structured logging
+- [ ] `io.Reader`, `io.Writer`, `io.Copy`
+- [ ] Processing large files without loading into RAM
 
 ---
 
-## Phase 4 — PostgreSQL
+## Phase 4 — HTTP & Backend Patterns
 
-### 4.1 Indexing ⬜
-- [ ] What is a B-tree index and how does it work?
-- [ ] When does an index help? When does it NOT help?
-- [ ] What is a composite index? What is column order rule?
-- [ ] What is a covering index?
-- [ ] What is an index scan vs sequential scan?
-- [ ] How do you read EXPLAIN ANALYZE output?
+### 4.1 HTTP & REST API ⬜
+- [ ] HTTP request/response structure
+- [ ] Safe and idempotent methods
+- [ ] Common HTTP status codes
+- [ ] Headers, cookies, Content-Type, Accept
+- [ ] HTTP/1.1 vs HTTP/2 basics
+- [ ] CORS
+- [ ] Resource-oriented endpoint design
+- [ ] POST vs PUT vs PATCH
+- [ ] 401 vs 403 vs 404 vs 409 vs 422 vs 500
+- [ ] Pagination, filtering, sorting
+- [ ] API versioning
+- [ ] Consistent error response format
+- [ ] Idempotency key
+- [ ] Middleware patterns (request ID, logging, recovery)
+- [ ] Server and client timeouts
+- [ ] Graceful shutdown
+- [ ] Health and readiness endpoints
+- [ ] `http.Client` reuse
+- [ ] Retry with exponential backoff and jitter
 
-### 4.2 Transactions ⬜
-- [ ] What are ACID properties?
-- [ ] What are the four isolation levels?
-- [ ] What is a dirty read, phantom read, non-repeatable read?
-- [ ] What is MVCC and how does Postgres implement it?
-- [ ] What is a deadlock and how to prevent it?
+### 4.2 Authentication & Security ⬜
+- [ ] Authentication vs authorization
+- [ ] JWT structure (header, payload, signature)
+- [ ] Access token vs refresh token
+- [ ] Token expiration and revocation
+- [ ] Password hashing (bcrypt, Argon2)
+- [ ] RBAC and permission-based authorization
+- [ ] Object-level authorization checks
+- [ ] SQL injection prevention
+- [ ] XSS, CSRF, SSRF basics
+- [ ] Rate limiting implementation
+- [ ] Brute-force protection
+- [ ] Secrets not in source code
+- [ ] Never log sensitive data
+- [ ] File upload validation and size limits
 
-### 4.3 Performance ⬜
-- [ ] What is the N+1 query problem?
-- [ ] How do you fix N+1 in Go (with sqlx or pgx)?
-- [ ] What is connection pooling and why does it matter?
-- [ ] What is VACUUM and why does Postgres need it?
-- [ ] When would you partition a table?
-- [ ] What is the difference between partitioning and sharding?
+### 4.3 Testing ⬜
+- [ ] Table-driven tests and subtests
+- [ ] Mock vs fake vs stub
+- [ ] Interface-based dependency mocking
+- [ ] Error and edge case testing
+- [ ] `httptest` for handler and middleware tests
+- [ ] Repository integration tests
+- [ ] Test database and migrations
+- [ ] Testcontainers for dependencies
+- [ ] Benchmark and `-benchmem`
+- [ ] Fuzz testing
+- [ ] Race detector (`go test -race`)
+- [ ] Test coverage analysis
+- [ ] End-to-end vs load test
+- [ ] Load testing with k6 or similar
+
+### 4.4 Performance & Profiling ⬜
+- [ ] Measure first, optimize second
+- [ ] CPU, heap, goroutine profiling
+- [ ] `pprof` endpoints
+- [ ] Benchmark comparison
+- [ ] Reducing allocations
+- [ ] Escape analysis output
+- [ ] Stack vs heap
+- [ ] GC basics
+- [ ] Memory leak vs goroutine leak
+- [ ] DB connection pool bottleneck detection
+- [ ] Finding slow external APIs via tracing
 
 ---
 
-## Phase 5 — Behavioral
+## Phase 5 — PostgreSQL & Redis
 
-- [ ] Tell me about yourself (2 minute answer prepared)
-- [ ] Biggest technical challenge you faced and how you solved it
-- [ ] A time you disagreed with a teammate or decision
+### 5.1 SQL Queries ⬜
+- [ ] JOIN, GROUP BY, HAVING, subquery, CTE
+- [ ] EXISTS, UNION, CASE, window functions
+- [ ] ROW_NUMBER, RANK, LAG, LEAD
+- [ ] NULL and COALESCE handling
+- [ ] Dynamic filter queries
+- [ ] SQL parameterization
+
+### 5.2 Schema Design ⬜
+- [ ] Primary key, foreign key, unique, check constraints
+- [ ] Normalization vs denormalization
+- [ ] One-to-one, one-to-many, many-to-many relations
+- [ ] Soft delete trade-offs
+
+### 5.3 Indexing ⬜
+- [ ] B-tree, composite, partial, covering indexes
+- [ ] Composite index column order matters
+- [ ] Index selectivity
+- [ ] EXPLAIN and EXPLAIN ANALYZE
+- [ ] Seq Scan vs Index Scan vs Index Only Scan vs Bitmap Scan
+- [ ] Nested Loop vs Hash Join vs Merge Join
+- [ ] Estimated rows vs actual rows
+
+### 5.4 Transactions & Locking ⬜
+- [ ] ACID properties
+- [ ] Read Committed, Repeatable Read, Serializable
+- [ ] Dirty read, non-repeatable read, phantom read, lost update
+- [ ] SELECT FOR UPDATE
+- [ ] Optimistic vs pessimistic locking
+- [ ] Deadlock prevention
+- [ ] Serialization error → retry transaction
+- [ ] MVCC basics
+
+### 5.5 Performance ⬜
+- [ ] N+1 query problem and fix (sqlx, pgx)
+- [ ] Connection pooling
+- [ ] VACUUM and why Postgres needs it
+- [ ] Table partitioning vs sharding
+- [ ] Offset vs keyset pagination
+- [ ] Context with queries
+
+### 5.6 Redis & Caching ⬜
+- [ ] Cache-aside pattern (practical)
+- [ ] Read-through, write-through, write-behind
+- [ ] TTL and cache invalidation strategies
+- [ ] Cache key naming conventions
+- [ ] Cache hit/miss metrics
+- [ ] Cache stampede and hot key problems
+- [ ] Redis data types: string, hash, set, sorted set
+- [ ] Distributed lock risks
+- [ ] Redis persistence and eviction policies
+
+---
+
+## Phase 6 — Kafka & Message Brokers
+
+### 6.1 Core Concepts ⬜
+- [ ] Broker, topic, partition, offset, consumer group
+- [ ] Producer and consumer basics
+- [ ] Partition ordering and key impact
+- [ ] Replication, leader, follower
+- [ ] Consumer rebalance
+
+### 6.2 Delivery & Reliability ⬜
+- [ ] At-most-once, at-least-once, exactly-once
+- [ ] Auto commit vs manual commit
+- [ ] When to commit offset
+- [ ] Idempotent consumer
+- [ ] Deduplication key
+- [ ] Out-of-order event handling
+- [ ] Retryable vs permanent errors
+- [ ] Retry, backoff, jitter, DLQ
+- [ ] Poison message handling
+- [ ] Consumer graceful shutdown
+- [ ] Consumer lag monitoring
+
+### 6.3 Patterns ⬜
+- [ ] Transactional outbox and inbox patterns
+- [ ] Dual-write problem (DB + Kafka)
+- [ ] Event schema versioning
+
+---
+
+## Phase 7 — Architecture
+
+### 7.1 Patterns ⬜
+- [ ] Layered, Clean, Hexagonal Architecture
+- [ ] Dependency inversion principle
+- [ ] Domain, use case, infrastructure layers
+- [ ] Repository, Unit of Work, Adapter patterns
+- [ ] Strategy, Factory, Decorator, Middleware patterns
+- [ ] Dependency injection
+- [ ] Circular dependency prevention
+- [ ] Package boundary decisions
+
+### 7.2 Monolith & Microservices ⬜
+- [ ] Modular monolith concept
+- [ ] Module boundaries and dependencies
+- [ ] Modular monolith vs microservice trade-offs
+- [ ] Microservice pros and cons
+- [ ] Distributed transaction problems
+- [ ] Service discovery and API gateway
+- [ ] Saga and CQRS (when needed)
+
+---
+
+## Phase 8 — Infrastructure
+
+### 8.1 Docker ⬜
+- [ ] Image vs container
+- [ ] Dockerfile and multi-stage build
+- [ ] Minimal runtime image
+- [ ] `.dockerignore`
+- [ ] Environment variables, volumes, networks
+- [ ] Health check in Docker
+- [ ] Non-root user in container
+- [ ] Signal handling and PID 1
+- [ ] Graceful shutdown in container
+- [ ] Docker Compose
+- [ ] Image layers and caching
+- [ ] Never put secrets in image
+
+### 8.2 CI/CD ⬜
+- [ ] CI vs CD difference
+- [ ] Build, test, lint pipeline stages
+- [ ] Docker image build and registry push
+- [ ] Environment-based deployment
+- [ ] Migration management in pipeline
+- [ ] Rollback strategy
+- [ ] Artifact vs cache
+- [ ] Secret variable management
+- [ ] Branch/tag-based pipeline control
+- [ ] Post-deployment smoke tests
+
+### 8.3 Kubernetes Basics ⬜
+- [ ] Pod, Deployment, Service, Ingress
+- [ ] ConfigMap and Secret
+- [ ] Replicas and rolling update
+- [ ] Liveness, readiness, startup probes
+- [ ] Resource requests and limits
+- [ ] Graceful termination
+- [ ] Horizontal scaling basics
+- [ ] Pod restart analysis
+- [ ] Log and deployment status checks
+
+---
+
+## Phase 9 — Observability
+
+### 9.1 Logging ⬜
+- [ ] Structured logging
+- [ ] Log levels — when to use each
+- [ ] Request ID and Trace ID in logs
+- [ ] Never log sensitive data
+
+### 9.2 Metrics ⬜
+- [ ] Counter vs Gauge vs Histogram
+- [ ] Request count, error rate, latency metrics
+- [ ] DB pool, Kafka lag, retry, DLQ metrics
+- [ ] Prometheus metric exposure
+- [ ] SLI, SLO, SLA differences
+- [ ] p50, p95, p99 percentiles
+
+### 9.3 Tracing ⬜
+- [ ] Trace and span concepts
+- [ ] Context propagation
+- [ ] Tracing HTTP, DB, external API, Kafka flows
+- [ ] OpenTelemetry basics
+
+---
+
+## Phase 10 — Production Incidents
+
+### 10.1 Troubleshooting ⬜
+- [ ] Service slowing down — investigation steps
+- [ ] CPU at 100% — what to do
+- [ ] Memory or goroutine count growing — what to do
+- [ ] DB connection pool full — what to do
+- [ ] Finding slow queries
+- [ ] Kafka lag increasing — what to do
+- [ ] DLQ filling up fast — what to do
+- [ ] External API timeout — mitigation steps
+- [ ] Error rate spike after deployment — rollback procedure
+- [ ] Using logs, metrics, traces together
+- [ ] Root cause analysis and postmortem writing
+
+---
+
+## Phase 11 — Behavioral & Soft Skills
+
+### 11.1 Self-Introduction ⬜
+- [ ] "Tell me about yourself" — 2 min prepared answer
+- [ ] Why backend and Go specifically
+- [ ] Explain current project in 5 minutes
+- [ ] Explain current project architecture (draw diagram)
+
+### 11.2 Experience Questions ⬜
+- [ ] Biggest technical challenge (STAR format)
+- [ ] Production incident and lessons learned
+- [ ] Team disagreement — how you resolved it
+- [ ] Tight deadline situation
+- [ ] Code review disagreement handling
+- [ ] Wrong technical decision — honest answer
+- [ ] Strengths and areas for improvement
+
+### 11.3 Career Questions ⬜
 - [ ] Why are you leaving your current job?
-- [ ] What kind of projects or tech excites you?
-- [ ] Where do you want to be in 2–3 years?
-- [ ] Describe your process when you join a new codebase
+- [ ] What excites you about this role?
+- [ ] Where do you want to be in 2-3 years?
+- [ ] Process when joining a new codebase
+- [ ] Questions to ask the interviewer (prepared list)
+
+### 11.4 Project Deep Dive ⬜
+- [ ] Business goal of the project
+- [ ] Your specific role and contributions
+- [ ] Request and authentication flow
+- [ ] Database schema decisions
+- [ ] Transaction usage and why
+- [ ] Kafka flow, retry, DLQ decisions
+- [ ] Idempotency guarantees
+- [ ] Error handling model
+- [ ] Logging and tracing setup
+- [ ] Biggest bottleneck
+- [ ] What you would do differently
+
+---
+
+## Phase 12 — Portfolio & Final Prep
+
+### 12.1 Portfolio Project ⬜
+- [ ] Clean project structure
+- [ ] README and architecture diagram
+- [ ] REST API + PostgreSQL
+- [ ] Migrations and transactions
+- [ ] Auth and authorization
+- [ ] Validation and error handling
+- [ ] Structured logging
+- [ ] Kafka producer or consumer
+- [ ] Retry, DLQ, idempotency
+- [ ] Redis cache
+- [ ] Unit and integration tests
+- [ ] Race and load tests
+- [ ] Health and readiness checks
+- [ ] Metrics and tracing
+- [ ] Graceful shutdown
+- [ ] Dockerfile and Docker Compose
+- [ ] CI/CD pipeline
+
+### 12.2 Final Checklist ⬜
+- [ ] Can answer Go core questions
+- [ ] Can live-code a concurrency problem
+- [ ] Can optimize a SQL query
+- [ ] Can explain transactions and isolation
+- [ ] Can design a REST API
+- [ ] Can answer Kafka reliability questions
+- [ ] Can do a 45-min system design
+- [ ] Can solve Easy in 15-20 min
+- [ ] Can solve Medium in 30-40 min
+- [ ] Can explain project confidently
+- [ ] Can answer unknown questions professionally
+- [ ] Completed at least 3 mock interviews
+- [ ] Started applying to real positions
 
 ---
 
@@ -295,11 +661,20 @@ Legend: ✅ done | 🔄 in progress | ⬜ todo
 
 | Phase | Topics | Done |
 |-------|--------|------|
-| DS & Algo | 11 topics | 4 / 11 (in progress) |
-| System Design | 2 sections | 1 / 2 |
-| Go Internals | 2 sections | 0 / 2 |
-| PostgreSQL | 3 sections | 0 / 3 |
-| Behavioral | 7 questions | 0 / 7 |
+| 1. DS & Algo | 11 topics | 4/11 in progress |
+| 2. System Design | 3 sections | 1/3 |
+| 3. Go Core | 6 sections | 0/6 |
+| 4. HTTP & Backend | 4 sections | 0/4 |
+| 5. PostgreSQL & Redis | 6 sections | 0/6 |
+| 6. Kafka | 3 sections | 0/3 |
+| 7. Architecture | 2 sections | 0/2 |
+| 8. Infrastructure | 3 sections | 0/3 |
+| 9. Observability | 3 sections | 0/3 |
+| 10. Production | 1 section | 0/1 |
+| 11. Behavioral | 4 sections | 0/4 |
+| 12. Portfolio | 2 sections | 0/2 |
 
-**Notes file location:** `interview-prep/notes/`
-**Code practice location:** `interview-prep/code/`
+**Notes:** `notes/`
+**Code:** `code/`
+**Russian:** `russian/`
+**English:** `english/`
