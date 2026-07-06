@@ -12,6 +12,7 @@ Do NOT duplicate memory rules here — memory is the source of truth for teachin
 - **Track B3**: PostgreSQL (optional)
 - **Track C1**: English (continuous, during all discussions)
 - **Track C2**: Russian (when user wants to practice)
+- **Track D**: Mock Interviews (real questions from real-interview-questions/ folder)
 
 Progress is tracked in SPRINT.md. Russian roadmap is in russian/ROADMAP.md.
 
@@ -45,6 +46,13 @@ Progress is tracked in SPRINT.md. Russian roadmap is in russian/ROADMAP.md.
 - Include: explanations, senior-level answers (in simple English + Russian), key terms
 - Save questions and tasks to `tasks/<topic>/` folder
 
+## Track D — Mock Interview Rules
+- Questions come from `real-interview-questions/` folder (real company questions)
+- Each session saved to `mock-interviews/sessions/<company>-<date>.md`
+- After each answer: score (1-5), what was missing, model answer (EN + RU)
+- Weak areas logged to `mock-interviews/weak-points.md` with priority level
+- Weak points become study topics in Track B2/B3
+
 ## File Structure
 ```
 interview-prep/
@@ -55,6 +63,10 @@ interview-prep/
 │   └── 02-system-design/
 ├── tasks/<topic>/         # questions.md, tasks.md
 ├── english/vocabulary.md  # English corrections and phrases
+├── real-interview-questions/  # real questions from companies
+├── mock-interviews/
+│   ├── weak-points.md     # tracked weak areas with priority
+│   └── sessions/          # one file per mock session
 └── russian/
     ├── ROADMAP.md         # Russian learning roadmap
     └── vocabulary.md      # Russian vocabulary and corrections
