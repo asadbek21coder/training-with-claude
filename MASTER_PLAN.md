@@ -386,6 +386,162 @@ Protocol: do a 30-min mock the same evening. Fill the post-interview debrief imm
 
 ---
 
+## Section 10 — Optional: Language Expansion (After Month 9)
+
+**Do not start this section until:** readiness score > 70% OR you are past month 9.
+This is not a core requirement. It is an investment in thinking better, not collecting languages.
+
+**The goal is not syntax. The goal is paradigm.**
+
+Each language below was invented because existing languages handled a specific problem poorly. You are not learning to write production code in these — you are learning *what problem each was designed to solve* and *how that changes the way you think about your own systems*.
+
+**Recommended order:** Rust → Clojure → TypeScript/Node → SQL (ongoing) → C (one-time)
+
+---
+
+### Module 1: Rust (3–4 weeks)
+
+**The core idea:**
+Rust was invented to solve memory safety without garbage collection. Every other language either uses GC (Go, Java, Python) or requires manual memory management (C, C++). Rust's answer: ownership. Every value has exactly one owner. When the owner goes out of scope, the value is freed. No GC needed, no double-free bugs possible. The compiler enforces this at compile time.
+
+The single concept to internalize: **ownership and borrowing**. A value can be owned by one place, or borrowed immutably by many, or borrowed mutably by exactly one. These rules are checked at compile time — not runtime.
+
+**What Go does instead:** Go uses a garbage collector. This is simpler to write, but has costs: GC pauses (even if small), heap allocation pressure, you cannot control when memory is freed. Go hides memory management from you — Rust makes it explicit.
+
+**The Go connection:**
+- Before Rust: "GC is just magic that frees memory." After Rust: "I understand exactly what Go's GC is doing — tracking live pointers, sweeping dead ones — and I know what the latency cost is."
+- Before Rust: "Goroutine leak is a logic bug." After Rust: "In Rust this would be a compile error. Go chose runtime simplicity over compile-time safety."
+- Before Rust: "I pass slices around without thinking." After Rust: "I now think about who owns data and whether shared access is safe."
+
+**In a senior interview:** You can say — "Go's GC simplifies memory management at the cost of non-deterministic pauses and heap pressure. In latency-critical paths we minimize allocations for this reason. Rust solves this differently through ownership — no GC needed — but at the cost of a steeper learning curve and more explicit code."
+
+**Schedule:**
+- Week 1: Read "The Rust Book" chapters 1-4 only (ownership, borrowing, lifetimes). Stop at chapter 5.
+- Week 2: Read chapters 15-16 (smart pointers, concurrency). See how Rust prevents data races at compile time.
+- Week 3-4: Write one small program — a concurrent counter — in Rust. Compare to Go equivalent.
+- Stop here. Do not go further.
+
+**Enough when:** You can explain ownership and borrowing in plain English and identify three places in your Go code where the GC is making a tradeoff Rust would not need to make.
+
+**Canonical resource:** "The Rust Programming Language" (doc.rust-lang.org/book) — chapters 1-4 and 15-16 only. Free online. Skip all other chapters.
+
+---
+
+### Module 2: Clojure (2–3 weeks)
+
+**The core idea:**
+Clojure was invented by Rich Hickey who believed that most complexity in software comes from mutable state — state that changes over time and is shared between different parts of the system. His answer: make everything immutable by default. Data structures cannot be changed — you create new versions instead. State change is explicit and controlled.
+
+The single concept to internalize: **immutability as a default changes how you think about correctness**. In Go, a bug where two goroutines race to write a variable is a runtime crash. In Clojure, that scenario is structurally impossible — the data cannot be modified, only new data created.
+
+**What Go does instead:** Go uses mutable state everywhere. Structs are mutable. Maps are mutable. You protect shared mutable state with mutexes. This works but requires discipline — the language does not help you.
+
+**The Go connection:**
+- Before Clojure: "I pass a map to a function and modify it, that's fine." After Clojure: "That function now has a hidden dependency on state. If called concurrently, it's a race. If called twice, second call sees modified state from first. I should think about whether this should be immutable."
+- Before Clojure: "A struct is data." After Clojure: "A struct that can be modified from anywhere is not data — it's shared mutable state, which is a different (more dangerous) thing."
+- Before Clojure: "I use channels to pass data between goroutines." After Clojure: "Channels are the right instinct — you're sending immutable values between goroutines, not sharing mutable state. This is exactly what Clojure would do."
+
+**In a senior interview:** You can say — "When designing concurrent systems, I prefer to pass immutable data between goroutines rather than sharing mutable state. The Go memory model makes shared mutable state safe only with synchronization — it's simpler to avoid sharing altogether where possible."
+
+**Schedule:**
+- Week 1: Watch Rich Hickey's "Simple Made Easy" talk (55 min, free on YouTube). This is the entire philosophy in one talk.
+- Week 2: Watch "The Value of Values" talk (30 min) and "Persistent Data Structures" talk (30 min).
+- Week 3 (optional): Write one small Clojure program just to feel the immutability. Use clojure.org/guides/getting_started.
+- Stop here. You do not need to write Clojure professionally.
+
+**Enough when:** You can explain why immutable data structures simplify concurrent programming, and identify two places in your Go code where you are sharing mutable state that could be replaced with message passing.
+
+**Canonical resource:** Rich Hickey's "Simple Made Easy" talk (2011, Strange Loop conference) — free on YouTube. Watch this first, before anything else. The rest of his talks are bonuses.
+
+---
+
+### Module 3: TypeScript / Node.js — Event Loop (1–2 weeks)
+
+**The core idea:**
+Node.js was invented to solve the C10K problem — handling 10,000 concurrent connections. The existing solution was one OS thread per connection, which is expensive. Node's answer: a single thread with an event loop. Instead of blocking on I/O (waiting for a database response, a file read), you register a callback and continue. When the I/O completes, the event loop calls your callback.
+
+The single concept to internalize: **async/await is syntactic sugar for callbacks, and callbacks are how a single thread handles concurrency**. There is no parallelism — only concurrency through non-blocking I/O.
+
+**What Go does instead:** Go uses goroutines — lightweight threads scheduled by the Go runtime. You write blocking code that looks synchronous, and the scheduler switches goroutines when one is waiting on I/O. Same result (concurrency), completely different model.
+
+**The Go connection:**
+- Before Node study: "Goroutines are just how you do concurrency." After: "Goroutines and the event loop solve the same problem differently. Node forces you to think about async explicitly (await, Promise). Go hides it — you write blocking code and the scheduler makes it concurrent. Both approaches work. Node struggles with CPU-heavy work (blocks the single thread). Go handles CPU and I/O work equally well."
+- Before: "Go's net/http is fast because goroutines." After: "Go's net poller is functionally similar to Node's libuv — both use epoll/kqueue at the OS level. The difference is the programming model exposed to the developer."
+
+**In a senior interview:** You can say — "Node's event loop and Go's goroutines both solve high-concurrency I/O efficiently. The difference is model: Node requires async/await, which is explicit but verbose and fails under CPU load. Go's goroutines let you write synchronous-looking code that runs concurrently — simpler and handles mixed I/O + CPU workloads better."
+
+**Schedule:**
+- Day 1-3: Read "What the heck is the event loop anyway?" — Philip Roberts talk (26 min, JSConf EU 2014, free YouTube). This explains it perfectly.
+- Day 4-7: Read Node.js event loop documentation (nodejs.org/en/docs/guides/event-loop-timers-and-nexttick). One read-through.
+- Day 8-10: Write one tiny Node.js program with async/await and compare it mentally to the equivalent Go goroutine code.
+- Stop here.
+
+**Enough when:** You can explain why `await` is needed in Node but not in Go, and what Go's scheduler does that Node's event loop does not.
+
+**Canonical resource:** Philip Roberts — "What the heck is the event loop anyway?" (JSConf EU 2014, YouTube). 26 minutes. This is the single best explanation of the event loop that exists.
+
+---
+
+### Module 4: SQL — Beyond Basics (Integrate into regular study)
+
+**Do not treat this as a separate module with a start/end date.** Integrate it into your Track B3 (PostgreSQL) sessions. Every week, add one advanced SQL concept alongside your regular PostgreSQL study.
+
+**The core idea:**
+SQL is a declarative, set-based language. You describe *what* result you want, not *how* to get it. The query planner decides how. Most Go engineers write SQL procedurally — they think in loops ("for each user, get their orders"). The set-based way is: "give me users joined to their orders" — one operation on sets.
+
+**The single concept to internalize:** SQL operates on entire sets of rows at once. Window functions, CTEs, and aggregations are all set operations. A Go loop that processes rows one at a time is often a sign that the SQL could be doing that work.
+
+**Topics to add weekly (in order):**
+1. Window functions: `ROW_NUMBER()`, `RANK()`, `LAG()`, `LEAD()` — partition by, order by
+2. CTEs (WITH clause) — readable complex queries, recursive CTEs for tree structures
+3. EXPLAIN plan reading: Seq Scan vs Index Scan vs Hash Join vs Nested Loop
+4. Partial indexes and covering indexes — when and why
+5. `SELECT FOR UPDATE` vs optimistic locking — when to use each
+6. Keyset pagination vs offset pagination — why offset is slow on large tables
+
+**Canonical resource:** "Use The Index, Luke" (use-the-index-luke.com) — free, specifically about making SQL fast, written for developers not DBAs. Read in order. One chapter per week.
+
+---
+
+### Module 5: A Little C — Reading Only (1 week, whenever)
+
+**Do not write C. Only read it.**
+
+**The core idea:**
+C is the language Go's runtime is largely written in (with some assembly). Understanding C means you can read Go's own source code at the level of memory layout, pointer arithmetic, and system calls. Every abstraction in Go — goroutines, channels, the GC — is built on primitives you can read in C.
+
+**The single concept to internalize:** In C, a pointer is just a memory address. An array is just a pointer to the first element. A struct is just a block of memory with named offsets. Every high-level abstraction in every language is built on these.
+
+**The Go connection:**
+- After reading C: Open `src/runtime/chan.go` in Go's source. You will be able to read it. The `hchan` struct is just memory layout. The send/receive operations are pointer manipulation with synchronization. It is no longer magic.
+- After reading C: "Escape analysis" — when Go moves a variable to the heap — becomes concrete. You understand what the heap and stack physically are.
+
+**Schedule:**
+- Day 1-2: Read "Learn C in Y Minutes" (learnxinyminutes.com/docs/c/) — 1 hour total. Just syntax.
+- Day 3-5: Read the first 3 chapters of "The C Programming Language" (K&R). Focus on: variables, pointers, arrays. Skip everything else.
+- Day 6-7: Open Go's source — `src/runtime/chan.go`. Read `hchan` struct and `chansend()` function. Note how it maps to what you know about channels.
+- Stop completely after this week.
+
+**Enough when:** You can read `src/runtime/chan.go` and understand what the `hchan` struct contains and what `lock`, `sendq`, and `recvq` are for.
+
+**Canonical resource:** "The C Programming Language" by Kernighan and Ritchie (K&R) — chapters 1-5 only. This book is 45 years old and still the best introduction to C. Get a PDF or physical copy.
+
+---
+
+### Sequencing Summary
+
+| When | What | Time |
+|---|---|---|
+| Month 9+ or ahead of schedule | Rust (chapters 1-4, 15-16 of The Rust Book) | 3-4 weeks |
+| After Rust | Clojure (Rich Hickey talks only) | 2-3 weeks |
+| Any gap week | TypeScript/Node event loop (Philip Roberts talk + docs) | 1-2 weeks |
+| Ongoing, weekly | SQL advanced (Use The Index, Luke — 1 chapter/week) | Integrated |
+| Whenever curious about Go runtime | C reading (K&R chapters 1-5 + Go source) | 1 week |
+
+**Total time investment:** ~10-12 weeks if done sequentially. Not a priority before month 9. If interviews are going well and you have extra bandwidth, start with the Philip Roberts talk this week — it's 26 minutes and immediately useful.
+
+---
+
 ## File Map
 
 ```
