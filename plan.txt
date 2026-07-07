@@ -1,0 +1,16 @@
+i need one year plan for being ready for senior backend dev, software engineer interviews can you build a plan for me
+
+are there must read books for senior software engineers
+
+i need to build more detailed roadmap for myself, so i need to know which exact topics i have to master in order to pass senior interview easily
+
+i thought it this way too, i mean i planned to learn them in 3 cycles, like 1 cyle knowing the topic, subtopics, terms and understanding the full concept what is the problem, why we need this and how it works, for what problem is this a solution. in this level i fully aware of all and can use them well
+
+in second sycle i need to deeply understand them, know about implementation, how they made, can understand use and plus theoretically know how to build them. and understand that why we dicsuss them, or differences between alternatives, fully understand the big picture, can easily learn and understand new tech because i have concrete backgrounds and knowlede
+
+3. in third cycle i need to build them myself, know how to make them and how to make them well and how they made them so well and why
+
+
+
+these are just my thoughts, you can find exact boundaries and use best practices and real market and tech situation and seperate them concrete parts and help me to write all and all topics, subtopics, terms, problems, cases, finding sources(official docs or such level articles, books "bible"s ) and how to train myself more easily and fun. i know it takes some pain and i accept it, but we need to use all chances that modern tech gives us, easier ways to understand, simulations for more deeply understading and imagination, real problem cases to gain their live experience, and all, make it perfect please 
+

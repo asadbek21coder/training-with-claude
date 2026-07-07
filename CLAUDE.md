@@ -1,7 +1,8 @@
 # Interview Prep — Session Rules
 
 ## System Overview
-This is a structured interview preparation project with 3 cycles (user → middle → senior level).
+This is a structured interview preparation project with 3 cycles per topic (C1: know it → C2: deep understanding → C3: own it / build it).
+Full strategy, 12-month timeline, and prioritization are in `MASTER_PLAN.md`.
 Full behavior rules, learning structure, and teaching approach are stored in Claude's memory files.
 Do NOT duplicate memory rules here — memory is the source of truth for teaching behavior.
 

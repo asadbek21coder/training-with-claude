@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Study Progress Tracker</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0f0f13;
+    --bg2: #17171d;
+    --bg3: #1e1e27;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.13);
+    --text: #e8e6f0;
+    --text2: #9d9bac;
+    --text3: #5e5c6e;
+    --accent: #7c6af5;
+    --accent2: #a594f9;
+    --accent-bg: rgba(124,106,245,0.12);
+    --green: #4caf82;
+    --green-bg: rgba(76,175,130,0.12);
+    --amber: #f0a047;
+    --amber-bg: rgba(240,160,71,0.1);
+    --red: #e05c5c;
+    --radius: 10px;
+    --radius-lg: 16px;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 24px 16px 48px;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  h1 { font-size: 20px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .subtitle { color: var(--text2); font-size: 13px; margin-bottom: 28px; }
+
+  .section-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin: 28px 0 12px;
+  }
+
+  /* Today panel */
+  .today-panel {
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+
+  .today-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .today-date { font-size: 15px; font-weight: 600; }
+  .streak-badge {
+    background: var(--amber-bg);
+    color: var(--amber);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .session-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .session-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px;
+  }
+
+  .session-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+  .session-card input[type="text"],
+  .session-card select {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border2);
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 13px;
+    padding: 7px 10px;
+    outline: none;
+    font-family: inherit;
+    margin-bottom: 8px;
+  }
+
+  .cycle-buttons { display: flex; gap: 6px; }
+  .cycle-btn {
+    flex: 1;
+    padding: 5px 0;
+    border-radius: 6px;
+    border: 1px solid var(--border2);
+    background: transparent;
+    color: var(--text2);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+  .cycle-btn:hover { border-color: var(--accent); color: var(--accent2); }
+  .cycle-btn.active { background: var(--accent-bg); border-color: var(--accent); color: var(--accent2); font-weight: 600; }
+
+  .conf-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+  .conf-label { font-size: 11px; color: var(--text3); min-width: 70px; }
+  .conf-dots { display: flex; gap: 5px; }
+  .dot {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border2);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .dot.filled { background: var(--accent); border-color: var(--accent); }
+
+  .notes-row { margin-top: 10px; }
+  .notes-row textarea {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border2);
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 13px;
+    padding: 8px 10px;
+    resize: none;
+    height: 60px;
+    outline: none;
+    font-family: inherit;
+    line-height: 1.5;
+  }
+
+  .log-btn {
+    width: 100%;
+    padding: 11px;
+    background: var(--accent);
+    border: none;
+    border-radius: var(--radius);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: opacity 0.15s;
+    margin-top: 4px;
+  }
+  .log-btn:hover { opacity: 0.88; }
+
+  /* Stats row */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .stat-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px;
+    text-align: center;
+  }
+  .stat-value { font-size: 22px; font-weight: 700; color: var(--text); }
+  .stat-label { font-size: 11px; color: var(--text3); margin-top: 2px; }
+
+  /* Weekly heatmap */
+  .heatmap-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    margin-bottom: 6px;
+  }
+
+  .heatmap-cell {
+    aspect-ratio: 1;
+    border-radius: 4px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    position: relative;
+    cursor: default;
+    transition: border-color 0.15s;
+  }
+  .heatmap-cell.level-1 { background: rgba(124,106,245,0.2); border-color: rgba(124,106,245,0.3); }
+  .heatmap-cell.level-2 { background: rgba(124,106,245,0.4); border-color: rgba(124,106,245,0.5); }
+  .heatmap-cell.level-3 { background: rgba(124,106,245,0.65); border-color: rgba(124,106,245,0.7); }
+  .heatmap-cell.level-4 { background: var(--accent); border-color: var(--accent2); }
+  .heatmap-cell:hover { border-color: var(--accent2); }
+
+  .heatmap-labels {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    margin-bottom: 16px;
+  }
+  .heatmap-label { text-align: center; font-size: 10px; color: var(--text3); }
+
+  /* Topic progress */
+  .topic-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+
+  .topic-row {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .topic-name { flex: 1; font-size: 13px; font-weight: 500; }
+  .topic-tag {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .tag-core { background: var(--accent-bg); color: var(--accent2); }
+  .tag-eng { background: var(--green-bg); color: var(--green); }
+  .tag-lang { background: var(--amber-bg); color: var(--amber); }
+
+  .cycle-indicator { display: flex; gap: 4px; }
+  .cycle-pip {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--text3);
+    transition: all 0.15s;
+  }
+  .cycle-pip.done { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .cycle-pip.active { border-color: var(--accent); color: var(--accent2); }
+
+  .topic-conf { font-size: 11px; color: var(--text3); min-width: 28px; text-align: right; }
+
+  /* Recent log */
+  .log-list { display: flex; flex-direction: column; gap: 6px; }
+  .log-entry {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .log-date { font-size: 11px; color: var(--text3); min-width: 60px; }
+  .log-topic { flex: 1; font-size: 13px; }
+  .log-cycle {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    background: var(--accent-bg);
+    color: var(--accent2);
+    font-weight: 600;
+  }
+  .log-conf { font-size: 12px; color: var(--text2); min-width: 30px; text-align: right; }
+
+  .empty-state { color: var(--text3); font-size: 13px; padding: 20px 0; text-align: center; }
+
+  /* Readiness score */
+  .readiness-card {
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .readiness-ring {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+  }
+  .readiness-ring svg { transform: rotate(-90deg); }
+  .readiness-pct {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .readiness-info h3 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .readiness-info p { font-size: 13px; color: var(--text2); }
+
+  .clear-btn {
+    background: transparent;
+    border: 1px solid var(--border2);
+    border-radius: 6px;
+    color: var(--text3);
+    font-size: 12px;
+    padding: 5px 12px;
+    cursor: pointer;
+    font-family: inherit;
+    float: right;
+    margin-top: -4px;
+  }
+  .clear-btn:hover { color: var(--red); border-color: var(--red); }
+
+  @media (max-width: 480px) {
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .session-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Study Progress Tracker</h1>
+<p class="subtitle">Asadbek Egambergenov — Senior Engineer Prep</p>
+
+<!-- Readiness -->
+<div class="readiness-card">
+  <div class="readiness-ring">
+    <svg width="80" height="80" viewBox="0 0 80 80">
+      <circle cx="40" cy="40" r="34" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="7"/>
+      <circle id="readiness-arc" cx="40" cy="40" r="34" fill="none" stroke="var(--accent)" stroke-width="7"
+        stroke-linecap="round" stroke-dasharray="213.6" stroke-dashoffset="213.6"/>
+    </svg>
+    <div class="readiness-pct" id="readiness-pct">0%</div>
+  </div>
+  <div class="readiness-info">
+    <h3>Interview readiness</h3>
+    <p id="readiness-label">Log sessions to build your readiness score. Confidence × cycle depth across all topics.</p>
+  </div>
+</div>
+
+<!-- Stats -->
+<div class="stats-row">
+  <div class="stat-card">
+    <div class="stat-value" id="stat-streak">0</div>
+    <div class="stat-label">Day streak 🔥</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value" id="stat-total">0</div>
+    <div class="stat-label">Sessions logged</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value" id="stat-topics">0</div>
+    <div class="stat-label">Topics touched</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value" id="stat-hours">0h</div>
+    <div class="stat-label">Hours studied</div>
+  </div>
+</div>
+
+<!-- Heatmap -->
+<div class="section-title">Last 28 days</div>
+<div class="heatmap-grid" id="heatmap"></div>
+<div class="heatmap-labels" id="heatmap-labels"></div>
+
+<!-- Log Today -->
+<div class="section-title">Log today's session</div>
+<div class="today-panel">
+  <div class="today-header">
+    <div class="today-date" id="today-date"></div>
+    <div class="streak-badge" id="streak-display">🔥 0 days</div>
+  </div>
+
+  <div class="session-grid">
+    <div class="session-card">
+      <div class="session-label">Topic / subject</div>
+      <input type="text" id="input-topic" placeholder="e.g. Go scheduler, System design..." />
+      <select id="input-category">
+        <option value="engineering">Engineering</option>
+        <option value="language-en">Language — English</option>
+        <option value="language-ru">Language — Russian</option>
+        <option value="leetcode">LeetCode</option>
+        <option value="mock">Mock interview</option>
+      </select>
+    </div>
+
+    <div class="session-card">
+      <div class="session-label">Cycle level reached</div>
+      <div class="cycle-buttons">
+        <button class="cycle-btn" data-cycle="1" onclick="selectCycle(1)">C1</button>
+        <button class="cycle-btn" data-cycle="2" onclick="selectCycle(2)">C2</button>
+        <button class="cycle-btn" data-cycle="3" onclick="selectCycle(3)">C3</button>
+      </div>
+      <div class="conf-row">
+        <span class="conf-label">Confidence</span>
+        <div class="conf-dots" id="conf-dots">
+          <div class="dot" data-v="1" onclick="selectConf(1)"></div>
+          <div class="dot" data-v="2" onclick="selectConf(2)"></div>
+          <div class="dot" data-v="3" onclick="selectConf(3)"></div>
+          <div class="dot" data-v="4" onclick="selectConf(4)"></div>
+          <div class="dot" data-v="5" onclick="selectConf(5)"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="notes-row">
+    <textarea id="input-notes" placeholder="Optional: what did you learn, what was hard, what to revisit..."></textarea>
+  </div>
+
+  <button class="log-btn" onclick="logSession()">Log session</button>
+</div>
+
+<!-- Topic progress -->
+<div class="section-title">Topic progress</div>
+<div class="topic-list" id="topic-list">
+  <div class="empty-state">Log sessions to see topic progress here.</div>
+</div>
+
+<!-- Recent log -->
+<div class="section-title">
+  Recent sessions
+  <button class="clear-btn" onclick="clearAll()">Clear all data</button>
+</div>
+<div class="log-list" id="log-list">
+  <div class="empty-state">No sessions logged yet.</div>
+</div>
+
+<script>
+const STORAGE_KEY = 'asadbek_study_tracker_v1';
+let state = loadState();
+let selectedCycle = null;
+let selectedConf = 0;
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : { sessions: [] };
+  } catch { return { sessions: [] }; }
+}
+
+function saveState() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function today() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function selectCycle(n) {
+  selectedCycle = n;
+  document.querySelectorAll('.cycle-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.cycle-btn[data-cycle="${n}"]`).classList.add('active');
+}
+
+function selectConf(n) {
+  selectedConf = n;
+  document.querySelectorAll('.dot').forEach(d => {
+    d.classList.toggle('filled', parseInt(d.dataset.v) <= n);
+  });
+}
+
+function logSession() {
+  const topic = document.getElementById('input-topic').value.trim();
+  if (!topic) { alert('Please enter a topic.'); return; }
+  if (!selectedCycle) { alert('Please select a cycle level.'); return; }
+  if (!selectedConf) { alert('Please select a confidence level.'); return; }
+
+  const session = {
+    date: today(),
+    topic,
+    category: document.getElementById('input-category').value,
+    cycle: selectedCycle,
+    confidence: selectedConf,
+    notes: document.getElementById('input-notes').value.trim(),
+    ts: Date.now()
+  };
+
+  state.sessions.unshift(session);
+  saveState();
+
+  document.getElementById('input-topic').value = '';
+  document.getElementById('input-notes').value = '';
+  selectedCycle = null;
+  selectedConf = 0;
+  document.querySelectorAll('.cycle-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.dot').forEach(d => d.classList.remove('filled'));
+
+  render();
+}
+
+function clearAll() {
+  if (confirm('Clear all session data? This cannot be undone.')) {
+    state = { sessions: [] };
+    saveState();
+    render();
+  }
+}
+
+function getStreak() {
+  const days = [...new Set(state.sessions.map(s => s.date))].sort().reverse();
+  if (!days.length) return 0;
+  let streak = 0;
+  let cur = new Date(today());
+  for (let i = 0; i < days.length; i++) {
+    const d = new Date(days[i]);
+    const diff = Math.round((cur - d) / 86400000);
+    if (diff === streak) streak++;
+    else if (diff === streak + 1) { streak++; cur = d; }
+    else break;
+  }
+  return streak;
+}
+
+function renderHeatmap() {
+  const grid = document.getElementById('heatmap');
+  const labels = document.getElementById('heatmap-labels');
+  grid.innerHTML = '';
+  labels.innerHTML = '';
+  const dayCounts = {};
+  state.sessions.forEach(s => { dayCounts[s.date] = (dayCounts[s.date] || 0) + 1; });
+  const days = ['S','M','T','W','T','F','S'];
+  for (let i = 27; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const key = d.toISOString().slice(0, 10);
+    const count = dayCounts[key] || 0;
+    const cell = document.createElement('div');
+    cell.className = 'heatmap-cell' + (count >= 4 ? ' level-4' : count >= 3 ? ' level-3' : count >= 2 ? ' level-2' : count >= 1 ? ' level-1' : '');
+    cell.title = `${key}: ${count} session${count !== 1 ? 's' : ''}`;
+    grid.appendChild(cell);
+    const lbl = document.createElement('div');
+    lbl.className = 'heatmap-label';
+    lbl.textContent = i === 0 ? 'Today' : days[d.getDay()];
+    labels.appendChild(lbl);
+  }
+}
+
+function renderTopics() {
+  const container = document.getElementById('topic-list');
+  if (!state.sessions.length) {
+    container.innerHTML = '<div class="empty-state">Log sessions to see topic progress here.</div>';
+    return;
+  }
+  const topicMap = {};
+  state.sessions.forEach(s => {
+    if (!topicMap[s.topic]) topicMap[s.topic] = { cycle: 0, conf: [], category: s.category };
+    topicMap[s.topic].cycle = Math.max(topicMap[s.topic].cycle, s.cycle);
+    topicMap[s.topic].conf.push(s.confidence);
+    topicMap[s.topic].category = s.category;
+  });
+  const sorted = Object.entries(topicMap).sort((a, b) => b[1].cycle - a[1].cycle || b[1].conf.at(-1) - a[1].conf.at(-1));
+  container.innerHTML = sorted.map(([name, data]) => {
+    const avgConf = Math.round(data.conf.reduce((a, b) => a + b, 0) / data.conf.length);
+    const tagClass = data.category === 'engineering' || data.category === 'leetcode' || data.category === 'mock' ? 'tag-eng' : data.category === 'language-en' ? 'tag-core' : 'tag-lang';
+    const tagLabel = data.category === 'language-en' ? 'EN' : data.category === 'language-ru' ? 'RU' : data.category === 'leetcode' ? 'LC' : data.category === 'mock' ? 'MOCK' : 'ENG';
+    const pips = [1, 2, 3].map(n => `<div class="cycle-pip ${n < data.cycle ? 'done' : n === data.cycle ? 'active' : ''}">${n}</div>`).join('');
+    return `<div class="topic-row">
+      <div class="topic-name">${name}</div>
+      <span class="topic-tag ${tagClass}">${tagLabel}</span>
+      <div class="cycle-indicator">${pips}</div>
+      <div class="topic-conf">${'★'.repeat(avgConf)}${'☆'.repeat(5 - avgConf)}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderLog() {
+  const container = document.getElementById('log-list');
+  if (!state.sessions.length) {
+    container.innerHTML = '<div class="empty-state">No sessions logged yet.</div>';
+    return;
+  }
+  const catLabel = { engineering: 'Engineering', 'language-en': 'English', 'language-ru': 'Russian', leetcode: 'LeetCode', mock: 'Mock' };
+  container.innerHTML = state.sessions.slice(0, 15).map(s => `
+    <div class="log-entry">
+      <div class="log-date">${s.date.slice(5)}</div>
+      <div class="log-topic">${s.topic}</div>
+      <div class="log-cycle">C${s.cycle} · ${catLabel[s.category] || s.category}</div>
+      <div class="log-conf">${'★'.repeat(s.confidence)}</div>
+    </div>`).join('');
+}
+
+function renderStats() {
+  const streak = getStreak();
+  const total = state.sessions.length;
+  const topics = new Set(state.sessions.map(s => s.topic)).size;
+  const hours = (total * 1).toFixed(0);
+  document.getElementById('stat-streak').textContent = streak;
+  document.getElementById('stat-total').textContent = total;
+  document.getElementById('stat-topics').textContent = topics;
+  document.getElementById('stat-hours').textContent = hours + 'h';
+  document.getElementById('streak-display').textContent = `🔥 ${streak} day${streak !== 1 ? 's' : ''}`;
+}
+
+function renderReadiness() {
+  if (!state.sessions.length) return;
+  const topicMap = {};
+  state.sessions.forEach(s => {
+    if (!topicMap[s.topic]) topicMap[s.topic] = { cycle: 0, conf: [] };
+    topicMap[s.topic].cycle = Math.max(topicMap[s.topic].cycle, s.cycle);
+    topicMap[s.topic].conf.push(s.confidence);
+  });
+  const scores = Object.values(topicMap).map(t => {
+    const avgConf = t.conf.reduce((a, b) => a + b, 0) / t.conf.length;
+    return (t.cycle / 3) * 0.5 + (avgConf / 5) * 0.5;
+  });
+  const raw = scores.reduce((a, b) => a + b, 0) / scores.length;
+  const pct = Math.round(raw * 100);
+  const circumference = 213.6;
+  const offset = circumference - (pct / 100) * circumference;
+  document.getElementById('readiness-arc').style.strokeDashoffset = offset;
+  document.getElementById('readiness-pct').textContent = pct + '%';
+  const label = pct < 20 ? 'Early days — keep logging sessions consistently.' :
+    pct < 40 ? 'Building momentum. Focus on Cycle 2 depth.' :
+    pct < 60 ? 'Solid foundation. Push topics to Cycle 3.' :
+    pct < 80 ? 'Strong. Start mock interviews weekly.' :
+    'Interview-ready. Focus on weak spots and stay sharp.';
+  document.getElementById('readiness-label').textContent = label;
+}
+
+function render() {
+  document.getElementById('today-date').textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+  renderStats();
+  renderHeatmap();
+  renderTopics();
+  renderLog();
+  renderReadiness();
+}
+
+render();
+</script>
+</body>
+</html>
