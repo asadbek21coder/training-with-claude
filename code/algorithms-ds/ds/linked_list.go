@@ -1,6 +1,6 @@
 package ds
 
-import imp "code/ds/ds_imp"
+import imp "code/algorithms-ds/ds/ds_imp"
 
 // MakeCycle makes the node with cycleVal point back to the node with targetVal.
 // Used to create test cases with cycles.

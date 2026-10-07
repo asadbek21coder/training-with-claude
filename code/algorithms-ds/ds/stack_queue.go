@@ -1,7 +1,7 @@
 package ds
 
 import (
-	imp "code/ds/ds_imp"
+	imp "code/algorithms-ds/ds/ds_imp"
 	"strings"
 )
 

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"code/ds"
+	"code/algorithms-ds/ds"
 	"fmt"
 )
 

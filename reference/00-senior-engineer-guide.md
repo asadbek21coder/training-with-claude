@@ -4,7 +4,7 @@
 **Scope:** Classic SWE + DevOps + QA + Networking + Security + AI engineering
 **Relationship to other files:**
 - `reference/00-senior-engineer-guide.md` (this file) — **WHY**: what senior means, AI-era priorities, levels, books, capstone, timeline
-- `BIG_PICTURE.md` — **WHAT / STATUS**: every track → topic → subtopic → term, with progress marks
+- `roadmap/` — **WHAT / STATUS**: every track → topic → subtopic → term (L1/L2), with progress marks; `notes/` and `code/` per track
 - `LOG.md` — **TODAY**: one line per day
 
 ---
