@@ -107,3 +107,7 @@
 | "at least at **user level**" / "be **familiar with** it, not master it" | describing C1 level |
 | "**deprecated**" | old and should no longer be used (software term) |
 | "**well-structured**" | hyphen before a noun: "a well-structured repo" |
+| "learn them deeper and **know** how to use them efficiently" | know (knowledge) ≠ now (time) |
+| "**normally**", "**I've** learnt", "I **don't** know" | spelling / apostrophes |
+| "algorithms (**algo**) & data structures" | short form: algo, DS&A |
+| "skill, **module**, or **track**" | track = a learning path; module = a part of a course |
