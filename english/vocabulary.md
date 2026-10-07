@@ -98,3 +98,12 @@
 | "**T-shaped** engineer" | deep in one area, broad in many |
 | "**working proficiency**" | can do it independently, not an expert |
 | "You build it, you run it" | ownership of production |
+| "remove **unnecessary** files" | spelling: un-ne-**c**-e-**ss**-ary (one c, double s) |
+| "a topic, subtopic, **term**" | spelling: t-e-r-m |
+| "I'm teaching Go backend to a student **now**" | **now** = at this moment; **know** = to have knowledge |
+| "I **give lessons** / I **teach**" | "giving lessons to a student" is OK; "teaching a student" is more natural |
+| "check **how much of it** I know" | not "if how much part of it" |
+| "these tracks must go on **in parallel**" | "parallelly" is not used in English |
+| "at least at **user level**" / "be **familiar with** it, not master it" | describing C1 level |
+| "**deprecated**" | old and should no longer be used (software term) |
+| "**well-structured**" | hyphen before a noun: "a well-structured repo" |

@@ -1,31 +1,32 @@
-# Interview Prep — Session Rules
+# Learning Path — Session Rules
 
 ## System Overview
-This is a structured interview preparation project with 3 cycles per topic (C1: know it → C2: deep understanding → C3: own it / build it).
-Full strategy, 12-month timeline, and prioritization are in `MASTER_PLAN.md`.
-Full behavior rules, learning structure, and teaching approach are stored in Claude's memory files.
-Do NOT duplicate memory rules here — memory is the source of truth for teaching behavior.
+Structured path from a 3-year Go backend engineer to senior. Every topic goes through 3 cycles
+(C1: aware & can use → C2: deep understanding → C3: own it / build it).
+- **`BIG_PICTURE.md`** — the single source of truth: every track → topic → subtopic → terms, with status marks (⬜ 🟡 🟢 🔵) and IDs like `GO 8.4`.
+- **`LOG.md`** — one row per day.
+- Teaching behavior (per-topic flow, check mode vs learn mode) is stored in Claude's memory files — memory is the source of truth for teaching behavior; do not duplicate it here.
 
-## Tracks
-- **Track A**: DS & Algorithms (daily, mandatory)
-- **Track B1**: System Design (daily, mandatory)
-- **Track B2**: Go Internals (optional)
-- **Track B3**: PostgreSQL (optional)
-- **Track C1**: English (continuous, during all discussions)
-- **Track C2**: Russian (when user wants to practice)
-- **Track D**: Mock Interviews (real questions from real-interview-questions/ folder)
+## Priorities (current)
+- **MAIN: Track GO** — go through every Go topic until each subtopic is at least 🟡. The user teaches Go backend to a student, so this is the top priority. Start each subtopic in **check mode** (quiz first) to measure what the user already knows.
+- **DAILY PARALLEL (small piece each, every day):** DSA, EN, RU.
+- **LATER (one main track at a time, after GO):** PG → SD → OS → NET → DIST → OPS → SEC → QA → ARCH → AI → CAREER.
+- **Mock interviews:** on request; questions from `interviews/questions/` (when present) or from the current track.
 
-Progress is tracked in SPRINT.md. Russian roadmap is in russian/ROADMAP.md.
+## After every session
+1. Update the status mark of the covered subtopics in `BIG_PICTURE.md` (and the progress summary table at its end if it changed).
+2. Add one row to `LOG.md`.
+3. Save notes / tasks / vocabulary (see below), then commit and push.
 
 ## Language Coaching (Always Active)
 
-### English (Track C1)
+### English (Track EN)
 - Correct English errors in every user message — grammar, word choice, prepositions, articles
 - Add corrections to `english/vocabulary.md` (only correct versions, no mistake column)
 - During technical discussions, weave corrections naturally into the response — don't add a separate section
 - When teaching a new topic, include relevant technical English phrases
 
-### Russian (Track C2)
+### Russian (Track RU)
 - When user writes in Russian (Latin transliteration is OK), check grammar and word choice
 - Track common mistakes in `russian/vocabulary.md`
 - Focus corrections on: cases, verb aspect, gender agreement (user's weak points)
@@ -40,43 +41,46 @@ Progress is tracked in SPRINT.md. Russian roadmap is in russian/ROADMAP.md.
 ## Code Rules
 - Never write implementations — only function signatures with TODO
 - User implements everything. Give hints when stuck, never solutions.
-- Code files go in `code/ds/`, user implementations in `code/ds/ds_imp/`
+- Go module is `code/` (module name `code`):
+  - DSA skeletons in `code/ds/`, user implementations in `code/ds/ds_imp/`
+  - Go track exercises in `code/go/<topic>/` (skeleton + user implementation side by side)
 
 ## Notes Rules
-- Save all discussion conclusions to `notes/` folder
+- Save all discussion conclusions to `notes/<track>/` (`go/`, `dsa/`, `system-design/`, `postgres/`, ...)
+- File name: `<topic-number>-<slug>.md`, e.g. `notes/go/08-concurrency-basics.md`
 - Include: explanations, senior-level answers (in simple English + Russian), key terms
-- Save questions and tasks to `tasks/<topic>/` folder
+- Save questions and tasks to `tasks/<track>/<topic>/` (`questions.md`, `tasks.md`)
+- Term dictionaries in `reference/` may be extended when new terms are learned
 
-## Track D — Mock Interview Rules
-- Questions come from `real-interview-questions/` folder (real company questions)
-- Each session saved to `mock-interviews/sessions/<company>-<date>.md`
+## Mock Interview Rules
+- Each session saved to `interviews/sessions/<company-or-topic>-<date>.md`
 - After each answer: score (1-5), what was missing, model answer (EN + RU)
-- Weak areas logged to `mock-interviews/weak-points.md` with priority level
-- Weak points become study topics in Track B2/B3
+- Weak areas logged to `interviews/weak-points.md` with priority level
+- Weak points become study items in `BIG_PICTURE.md` (mark them as gaps)
 
 ## File Structure
 ```
-interview-prep/
-├── SPRINT.md              # progress tracker
-├── code/ds/               # function signatures + implementations
-├── notes/
-│   ├── 01-data-structures/
-│   └── 02-system-design/
-├── tasks/<topic>/         # questions.md, tasks.md
-├── english/vocabulary.md  # English corrections and phrases
-├── real-interview-questions/  # real questions from companies
-├── mock-interviews/
-│   ├── weak-points.md     # tracked weak areas with priority
-│   └── sessions/          # one file per mock session
-└── russian/
-    ├── ROADMAP.md         # Russian learning roadmap
-    └── vocabulary.md      # Russian vocabulary and corrections
+learning/
+├── BIG_PICTURE.md        # complete roadmap with statuses
+├── LOG.md                # daily log
+├── README.md             # how the repo works
+├── reference/            # 00-senior-engineer-guide.md + term dictionaries per area
+├── notes/<track>/        # discussion notes (EN + RU)
+├── tasks/<track>/<topic>/
+├── code/                 # Go module: ds/, ds/ds_imp/, go/
+├── interviews/           # quick-reference.md, weak-points.md, sessions/, companies/, my-projects.md
+├── english/              # PLAN.md, vocabulary.md
+└── russian/              # ROADMAP.md, grammar.md, vocabulary.md, interview_phrases.md
 ```
 
 ## Git — Auto Push
-After saving notes, updating SPRINT.md, or completing a topic discussion, automatically:
+After saving notes, updating BIG_PICTURE.md / LOG.md, or completing a topic discussion, automatically:
 1. `git add` the changed files (not `git add .` — only relevant files)
-2. `git commit -m "topic(scope): what changed"` — example: `"notes(binary-search): add cycle 1 notes"`
+2. `git commit -m "topic(scope): what changed"` — example: `"notes(go-channels): add cycle 1 notes"`
 3. `git push origin main`
 
-Do this at natural breakpoints — after notes are written, after sprint is updated, after code skeletons are created. NOT after every single line edit mid-discussion.
+Git identity is not configured on this machine — commit with
+`git -c user.name="Egambergenov Asadbek" -c user.email="asadbekegambergenov21coder@gmail.com" commit ...`
+until the user sets it globally.
+
+Do this at natural breakpoints — NOT after every single line edit mid-discussion.

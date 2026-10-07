@@ -243,3 +243,11 @@ Each preposition requires a specific case.
 
 **Priority order:** Phase 1.1 (Cases) → 1.3 (Verb Aspect) → 3.1 (Work Phrases) → everything else.
 These three will give you 80% of what you need for work.
+
+---
+
+## Known weak points (from earlier sessions)
+- Genitive case for possession (сервера, not "в сервере")
+- Verb aspect: делать (imperfective, ongoing) vs сделать (perfective, completed)
+- Prepositions: в + Prepositional for location, на + Prepositional for surfaces/events
+- Gender agreement of adjectives and past-tense verbs
