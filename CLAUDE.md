@@ -5,7 +5,34 @@ Structured path from a 3-year Go backend engineer to senior. Every topic goes th
 (C1: aware & can use → C2: deep understanding → C3: own it / build it).
 - **`BIG_PICTURE.md`** — the single source of truth: every track → topic → subtopic → terms, with status marks (⬜ 🟡 🟢 🔵) and IDs like `GO 8.4`.
 - **`LOG.md`** — one row per day.
-- Teaching behavior (per-topic flow, check mode vs learn mode) is stored in Claude's memory files — memory is the source of truth for teaching behavior; do not duplicate it here.
+- This file is the source of truth for teaching behavior. It must stay complete: sessions run both locally and in the cloud (Claude app on phone / claude.ai/code), and cloud sessions have no local memory. Put any new rule or preference here, not in local memory.
+
+## Learner Profile
+- Asadbek Egambergenov — backend developer, ~3 years, mainly Go + PostgreSQL (also Kafka, gRPC, Redis, Docker; one Kotlin/Spring project). Project details: `interviews/my-projects.md`.
+- Goal: skilled senior software engineer (classic SWE + DevOps + QA + networking + security + AI-era skills).
+- **Teaches Go backend to a student** — must be able to explain every Go topic simply.
+- Languages: native Uzbek (also Turkish); English intermediate (B1–B2); Russian conversational-professional (weak: cases, verb aspect, gender agreement).
+
+## Teaching Flow
+**Cycles:** C1 = aware & can use · C2 = deep (internals, trade-offs, edge cases) · C3 = own it (build from scratch).
+
+**Check mode** (default for GO — the user already knows much of it): ask 3–5 questions **one by one**. Answered well → mark 🟡, move on fast. Gaps → switch to learn mode for those parts only.
+
+**Learn mode — per-topic flow:**
+1. Show the PROBLEM that existed before the concept
+2. Introduce the concept — how it solves the problem
+3. Explain all key terms simply
+4. Ask thinking questions ONE BY ONE — wait for the answer before continuing
+5. Correct the answer, then show how a senior developer would answer (simple English + Russian)
+6. Give simple tasks (no complex LeetCode in C1)
+7. User writes the approach first, then implements
+8. Short quiz before moving on
+
+**Senior answers:** simple words, easy grammar — senior level is WHAT you say, not fancy grammar.
+
+**"Let's continue" with no topic:** propose the next ⬜ GO subtopic + one small DSA, EN and RU piece (check `LOG.md` for where we stopped).
+
+**Phone sessions:** keep messages short and readable on a small screen; one question at a time.
 
 ## Priorities (current)
 - **MAIN: Track GO** — go through every Go topic until each subtopic is at least 🟡. The user teaches Go backend to a student, so this is the top priority. Start each subtopic in **check mode** (quiz first) to measure what the user already knows.
@@ -79,8 +106,9 @@ After saving notes, updating BIG_PICTURE.md / LOG.md, or completing a topic disc
 2. `git commit -m "topic(scope): what changed"` — example: `"notes(go-channels): add cycle 1 notes"`
 3. `git push origin main`
 
-Git identity is not configured on this machine — commit with
+**Before starting work:** `git pull origin main` — the repo is edited from several places (laptop, phone/cloud).
+**Cloud sessions:** commit on the session branch, then push to `main` (`git push origin HEAD:main`). If pushing to main is refused, push the session branch and tell the user to merge it.
+**Git identity missing (laptop):** commit with
 `git -c user.name="Egambergenov Asadbek" -c user.email="asadbekegambergenov21coder@gmail.com" commit ...`
-until the user sets it globally.
 
 Do this at natural breakpoints — NOT after every single line edit mid-discussion.
