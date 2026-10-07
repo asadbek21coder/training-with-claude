@@ -81,3 +81,20 @@
 | "When we follow a child pointer from a leaf node, the pointer is nil" | explaining base case |
 | "Every node in the **entire left subtree** must be less than the ancestor" | explaining BST property |
 | "It **distributes incoming traffic across** the available servers" | explaining load balancer |
+
+## Corrected Phrases (from session 2026-10-07)
+
+| Correct version | Note |
+|---|---|
+| "**Let's** begin" | Let's = let us (apostrophe needed) |
+| "I mainly **wrote** code in Go" | past tense of write; "write code **in** a language" |
+| "I **participated in** several projects" / "I **took part in** several projects" | participate always takes **in** |
+| "I need **a** complete roadmap" | countable noun → article |
+| "it should **take into account** that…" | not "account that" |
+| "now **it's the** era of AI" / "**we're in the** AI era" | |
+| "some skills **don't matter** anymore, and some **are** essential" | plural subject → don't; verb needed in second clause |
+| "**alongside** the classic roadmap" | spelling: along**side** |
+| "I want to become a **professional, skilled** senior engineer" | article "a" before job title |
+| "**T-shaped** engineer" | deep in one area, broad in many |
+| "**working proficiency**" | can do it independently, not an expert |
+| "You build it, you run it" | ownership of production |
