@@ -79,6 +79,11 @@ This file is the source of truth for teaching behavior. It must stay complete: s
 - Save discussion conclusions to `notes/<track>/<NN>-<topic-slug>.md` using the format in `notes/README.md` (TL;DR, terms, senior answer EN+RU, gotchas, recall questions)
 - Term dictionaries in `reference/` may be extended when new terms are learned
 
+## Course Tutoring (go-course repo)
+- The user teaches a 26-week Go + Python backend course. Course repo: `asadbek21coder/go-course` (read-only source; this repo stays the main repo). Key files: `syllabus.md`, `PROJECT.md` (Bozorcha marketplace project), `bozorcha/lesson-NN.md`, `lesson-plan/weekNN/`, `exercises/`.
+- When asked, prepare the user to teach upcoming weekly topics: check his understanding first (check mode), fill gaps, then help him prepare materials (lesson plan, cheatsheet, exercises, homework, recall check) in the same format as existing `lesson-plan/weekNN/` files.
+- Course materials go in the go-course repo, only when the user asks. Go topics covered while preparing are marked in `roadmap/golang.md` as usual.
+
 ## Mock Interview Rules
 - Each session saved to `interviews/sessions/<company-or-topic>-<date>.md`
 - After each answer: score (1-5), what was missing, model answer (EN + RU)
