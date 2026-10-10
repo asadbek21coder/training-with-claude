@@ -1,30 +1,36 @@
 # Go Roadmap
 
-> **L1** = aware & can use · **L2** = deep & efficient · Status: ⬜ not started · 🔄 in progress · ✅ done
+> **L1** = aware & can use · **L2** = deep & efficient · **L3** = internals, book depth (📖 *The Anatomy of Go*, Phuong Le — page numbers = PDF pages) · Status: ⬜ not started · 🔄 in progress · ✅ done
 > **Notes:** `notes/golang/` · **Practice:** `code/golang/` · **Dictionary:** `reference/golang.md`
 
 **Why (EN):** Go is your main language and you teach it — it must be your deepest skill. In the AI era, syntax matters less (AI writes it), but concurrency correctness, runtime knowledge, idioms and the ability to review and profile Go code matter more: AI confidently writes goroutine leaks, races and non-idiomatic code.
 **Зачем (RU):** Go — твой основной язык, и ты его преподаёшь, поэтому это должен быть самый глубокий навык. В эпоху ИИ синтаксис менее важен (его пишет ИИ), но корректная конкурентность, знание рантайма, идиомы и умение ревьюить и профилировать Go-код важнее: ИИ уверенно пишет утечки горутин, гонки и неидиоматичный код.
 
-**Order:** topics 1–14 = the course core (teach these to your student); 15–23 = backend & senior depth. **Current goal: all L1 first**, then L2.
+**Order:** topics 1–14 = the course core (teach these to your student); 15–23 = backend & senior depth. **Current goal: all L1 first**, then L2, then L3 (the book). Topic 24 = the compiler (book Ch5).
 
 ## Progress
 | Layer | Done | Total |
 |---|---|---|
-| L1 | 0 | 84 |
+| L1 | 1 | 85 |
 | L2 | 0 | 72 |
+| L3 (📖 book) | 0 | 33 |
 
 ---
 
 ## GO 1 — Philosophy & toolchain
 **L1 — aware & can use**
-- ⬜ **1.1 Why Go exists** — simplicity, composition over inheritance, fast compilation, static typing, garbage collection, CSP, Go proverbs, Go 1 compatibility promise, release cycle (Feb/Aug)
+- ✅ **1.1 Why Go exists** — simplicity, composition over inheritance, fast compilation, static typing, garbage collection, CSP, Go proverbs, Go 1 compatibility promise, release cycle (Feb/Aug)
 - ⬜ **1.2 Installing & environment** — `GOROOT`, `GOPATH`, `GOBIN`, `GOOS`, `GOARCH`, `go env`, `go version`, `PATH`
 - ⬜ **1.3 The `go` command** — `go run`, `go build`, `go install`, `go test`, `go mod`, `go get`, `go fmt`, `go vet`, `go doc`, `go generate`, `go clean`, `go list`, `go tool`
 - ⬜ **1.4 Program structure** — `package main`, `func main`, executable vs library package, `gofmt`, Go playground
 
 **L2 — deep & efficient**
 - ⬜ **1.5 Toolchain management** — `GOTOOLCHAIN`, `toolchain` directive, `go env -w`, build cache (`GOCACHE`), module cache (`GOMODCACHE`), `GODEBUG` settings and compatibility, `go version -m binary`
+
+**L3 — internals (📖 Anatomy of Go)**
+- ⬜ **1.6 How Go runs your code** — compiler + runtime as one system, what is in a Go binary, why Go has a runtime at all (Ch1 §2)
+
+📖 **Anatomy of Go:** Ch1 (p.16–28)
 
 🛠 **Practice** — L1: install Go, create a module, write `hello` with a flag, build binaries for linux/amd64 and darwin/arm64 · L2: inspect a built binary with `go version -m`, clear and measure the build cache effect on build time
 
@@ -46,6 +52,14 @@
 - ⬜ **2.10 Closures in depth** — captured variables by reference, per-iteration loop variables (Go 1.22), closures and escape to heap, `new(expr)` (Go 1.26)
 - ⬜ **2.11 Numeric edge cases** — integer overflow wraparound, untyped constant precision, float precision (`0.1+0.2`), `math.MaxInt`, NaN and Inf, division by zero (int panics, float does not)
 
+**L3 — internals (📖 Anatomy of Go)**
+- ⬜ **2.12 Number representation** — two's complement, integer literals (`0b`, `0o`, `0x`, `_`), IEEE-754 bit layout, float literal styles, compile-time vs runtime division-by-zero checks (Ch2 §1–2)
+- ⬜ **2.13 Variables & constants inside the compiler** — scope resolution, how declarations are type-checked, untyped constants with arbitrary precision, constant folding, where constants live in the binary (Ch2 §5)
+- ⬜ **2.14 unsafe & addressability** — `unsafe.Pointer` vs `uintptr`, the valid conversion patterns, why `uintptr` is not a reference for the GC, addressable vs unaddressable values (Ch2 §6–7)
+- ⬜ **2.15 Functions under the hood** — function values as `funcval`, how closures capture variables, variadic args as hidden slices, how `init` order is computed (Ch6 §2)
+
+📖 **Anatomy of Go:** Ch2 (p.29–85) · Ch6 §2 (p.417–436)
+
 🛠 **Practice** — L1: CLI "unit converter" using constants with `iota`, `switch`, functions with multiple returns · L2: write 5 tiny programs that show surprising behavior (shadowing bug, closure capture, int overflow, float compare, init order) and explain each to your student
 
 ---
@@ -64,6 +78,14 @@
 - ⬜ **3.8 Strings — internals & cost** — string header, `[]byte(s)` / `string(b)` copy cost, concatenation cost, compiler optimizations for conversions, `unsafe.String` (awareness)
 - ⬜ **3.9 Struct memory layout** — field alignment & padding, field ordering to save memory, `unsafe.Sizeof`, zero-size `struct{}` uses (sets, signals), copying large structs
 
+**L3 — internals (📖 Anatomy of Go)**
+- ⬜ **3.10 Array initialization strategies** — small vs large array literals, static data vs runtime init, array length vs capacity (Ch3 §1)
+- ⬜ **3.11 append & allocation in depth** — `growslice`, growth formula, rounding up to size classes, `makeslice`, slice expressions and bounds checks (Ch3 §2)
+- ⬜ **3.12 String conversion internals** — UTF-8 decoding in `range`, when `[]byte`↔`string` conversions skip allocation, `staticuint64s`, `concatstrings` and efficient concatenation (Ch3 §3)
+- ⬜ **3.13 Swiss map in depth** — directory, tables, groups, control bytes, H1/H2 hash split, probing, growth and splitting, iteration while modifying (Ch3 §4)
+
+📖 **Anatomy of Go:** Ch3 (p.86–172)
+
 🛠 **Practice** — L1: word-frequency counter (map + slices + sort), a `Student` struct with methods for your lesson · L2: write a program that proves the slice aliasing trap and fix it; measure struct size before/after field reordering
 
 ---
@@ -81,6 +103,11 @@
 - ⬜ **4.7 Interface design** — small interfaces, "accept interfaces, return structs", consumer-side interfaces, interface pollution, compile-time check `var _ I = (*T)(nil)`
 - ⬜ **4.8 Embedding in depth** — interface embedding, embedding an interface in a struct, promotion conflicts, embedding vs inheritance
 
+**L3 — internals (📖 Anatomy of Go)**
+- ⬜ **4.9 Interface runtime internals** — `eface` vs `iface`, `itab` (`inter`, `_type`, `hash`, `fun`), how `data` is filled (pointer used directly, `zerobase`, `staticuint64s`, read-only data, stack or heap copy), dispatch through `itab.fun`, compiler-generated pointer-receiver wrappers, `itabTable` + `getitab`, type-assertion cache (Ch4 §2.3–2.5)
+
+📖 **Anatomy of Go:** Ch4 §1–2 (p.174–233)
+
 🛠 **Practice** — L1: `Shape` interface with `Area()` for 3 types + type switch printer · L2: write a bug where a function returns a typed nil error, find it, fix it; design a `Storage` interface defined by its consumer
 
 ---
@@ -97,6 +124,12 @@
 - ⬜ **5.6 defer in depth** — arguments evaluated immediately, defer modifying named results, defer in loops (resource leak), handling `Close()` errors, open-coded defers (cost)
 - ⬜ **5.7 Panics in production** — panics in goroutines crash the whole program, recovery middleware, when panic is acceptable (programmer bug, init), `os.Exit` skips defers
 
+**L3 — internals (📖 Anatomy of Go)**
+- ⬜ **5.8 defer implementation** — `_defer` record, per-goroutine linked list, `deferproc`/`deferreturn`, heap vs stack vs open-coded defers and their rules, per-P defer pools (Ch6 §3)
+- ⬜ **5.9 panic & recover internals** — `_panic` struct, how the runtime unwinds and runs defers, why `recover` only works directly in a deferred call (argument pointer check) (Ch6 §4)
+
+📖 **Anatomy of Go:** Ch6 §3–4 (p.436–471) — errors/wrapping are not in the book; use Go blog + course plans
+
 🛠 **Practice** — L1: file-reading function that wraps errors with context; check them with `errors.Is/As` · L2: define a domain error type for a "user service" and map it to HTTP codes; write a recovery middleware and a test that proves it works
 
 ---
@@ -110,6 +143,11 @@
 **L2 — deep & efficient**
 - ⬜ **6.4 Type sets & generic types** — `~T` (underlying type), constraint interfaces with methods, generic data structures (`Stack[T]`, `Set[T]`), generic type aliases (Go 1.24)
 - ⬜ **6.5 Limits & trade-offs** — no method type parameters, no specialization, interface vs generic choice, readability cost, GC shape stenciling and performance
+
+**L3 — internals (📖 Anatomy of Go)**
+- ⬜ **6.6 Generics compiler internals** — type inference steps (function argument, constraint, core type), GC shape stenciling, dictionaries, cost of calling methods through type parameters (Ch4 §3.3–3.4)
+
+📖 **Anatomy of Go:** Ch4 §3 (p.233–256)
 
 🛠 **Practice** — L1: generic `Map`, `Filter`, `Reduce` functions · L2: generic `Set[T comparable]` and `Cache[K, V]` with tests; benchmark a generic vs interface-based version
 
@@ -143,6 +181,8 @@
 - ⬜ **8.7 Channel rules & closing patterns** — receive from closed channel (zero value, ok=false), send on closed panics, close of closed/nil panics, only the sender closes, nil channel blocks forever (disabling select cases), "all goroutines are asleep — deadlock!"
 - ⬜ **8.8 Once & atomics** — `sync.Once`, `sync.OnceFunc`/`OnceValue`/`OnceValues`, `sync/atomic`, `atomic.Int64`, `atomic.Pointer[T]`, compare-and-swap (CAS)
 - ⬜ **8.9 Choosing the tool** — mutex vs channel decision, RWMutex costs (writer starvation, when it's slower), don't copy a mutex (`go vet` copylocks), lock granularity
+
+📖 **Anatomy of Go:** Ch8 §1–2 (p.739–766)
 
 🛠 **Practice** — L1: concurrent URL status checker with WaitGroup + results channel · L2: safe counter in 3 versions (mutex, atomic, channel) + benchmark each; reproduce and explain a deadlock
 
@@ -196,6 +236,11 @@
 - ⬜ **11.9 JSON in depth** — custom `MarshalJSON`/`UnmarshalJSON`, `json.RawMessage`, `DisallowUnknownFields`, numbers into `any` → float64 (`UseNumber`), case-insensitive field matching, performance, `encoding/json/v2` (experiment)
 - ⬜ **11.10 time pitfalls** — monotonic clock, time zones & `time.Location`, storing UTC, `time.After` in loops, stopping timers/tickers, comparing with `Equal`
 - ⬜ **11.11 Modern stdlib** — `iter` package & range-over-func iterators (Go 1.23), `slices.Collect`/`maps.Keys` iterators, `unique` (interning), `weak` (Go 1.24), `runtime.AddCleanup`
+
+**L3 — internals (📖 Anatomy of Go)**
+- ⬜ **11.12 Timer internals** — timer struct and states, per-P timer heap, Go 1.23 timer changes (unbuffered timer channels, unreferenced timers collected by GC) (Ch8 §3)
+
+📖 **Anatomy of Go:** Timers: Ch8 §3 (p.766–781)
 
 🛠 **Practice** — L1: CLI that reads a CSV, converts it to JSON, logs with slog, takes flags · L2: stream a 1 GB file line by line with constant memory; write your own iterator `func(yield func(T) bool)` over a paginated API
 
@@ -337,6 +382,19 @@
 - ⬜ **20.8 Interface & map internals** — `iface`, `eface`, `itab`, dynamic dispatch, devirtualization, Swiss table groups and control bytes
 - ⬜ **20.9 reflect & unsafe** — `reflect.Type`, `reflect.Value`, `Kind`, struct tags via reflection, reflection cost, `unsafe.Pointer`, `unsafe.Sizeof`/`Alignof`/`Offsetof`, cgo call cost
 
+**L3 — internals (📖 Anatomy of Go)**
+- ⬜ **20.10 Binary & memory layout** — TEXT, RODATA, DATA, BSS, noptr sections, what each part of your program becomes (Ch7 §1)
+- ⬜ **20.11 Heap & virtual memory** — virtual memory, arenas, how Go reserves memory, small/large/tiny allocation paths, pointer bitmaps and malloc header (Ch7 §2)
+- ⬜ **20.12 Goroutine stack anatomy** — segmented vs contiguous stacks, stack frame structure, frame types, stack growth (`morestack`), stack copying and shrinking (Ch7 §3)
+- ⬜ **20.13 GC cycle step by step** — trigger, sweep termination, marking (roots, workers, assists), mark termination, sweeping, GOGC/GOMEMLIMIT math (Ch7 §5)
+- ⬜ **20.14 Runtime startup** — `rt0`, thread-local storage, `g0` on `m0`, cgo startup, handoff to `main` (Ch8 §5)
+- ⬜ **20.15 Goroutine lifecycle & scheduler loop** — `newproc`, `runnext` slot, local/global run queues, `schedule()`/`findRunnable`, goroutine states (Ch8 §6–7)
+- ⬜ **20.16 Preemption** — cooperative scheduling, cooperative preemption via stack checks, asynchronous preemption via signals (Ch8 §8)
+- ⬜ **20.17 I/O, netpoller & sysmon** — file descriptors, blocking vs poller-based I/O, epoll/kqueue integration, sysmon cycle and its jobs (Ch8 §9–10)
+- ⬜ **20.18 select internals** — `selectgo`, random case order, lock ordering, select with closed channels (Ch8 §2)
+
+📖 **Anatomy of Go:** Ch7 Memory (p.577–737) · Ch8 Concurrency (p.738–873)
+
 🛠 **Practice** — L1: spawn 100k goroutines and observe memory; run a program with `GODEBUG=gctrace=1` and read the output · L2: run `-gcflags=-m` on your code and remove 3 heap escapes; view scheduler behavior in `go tool trace`; read `runtime/chan.go` and draw `hchan`
 
 ---
@@ -350,6 +408,13 @@
 - ⬜ **21.3 Advanced profiling** — goroutine/block/mutex profiles, `go tool trace`, `benchstat`, comparing before/after, avoiding misleading benchmarks
 - ⬜ **21.4 Optimization techniques** — preallocation, avoiding `[]byte`↔`string` copies, `strings.Builder`, `sync.Pool`, fewer pointers, struct field ordering, bounds check elimination, inlining budget, false sharing
 - ⬜ **21.5 PGO & GC tuning** — profile-guided optimization (`default.pgo`), `GOGC` vs `GOMEMLIMIT` trade-off, memory limits in containers
+
+**L3 — internals (📖 Anatomy of Go)**
+- ⬜ **21.6 All pprof profiles in depth** — heap/alloc, CPU, mutex, block, goroutine, threadcreate, delta profiles; reading call graphs (Ch6 §5)
+- ⬜ **21.7 Execution tracer** — enabling traces, reading the timeline, goroutine analysis, tasks/regions/logs, tracer internals (Ch6 §6)
+- ⬜ **21.8 PGO mechanics** — how profiles drive hot-call inlining and devirtualization (Ch6 §7)
+
+📖 **Anatomy of Go:** Ch6 §5–7 (p.471–574)
 
 🛠 **Practice** — L1: benchmark 3 ways to build a string; profile the "notes" API under load and find the top function · L2: cut allocations of a JSON-heavy endpoint by 50% and prove it with `benchstat`; try PGO and measure
 
@@ -376,3 +441,22 @@
 - ⬜ **23.3 Go in the industry** — Docker, Kubernetes, Terraform, Prometheus, etcd are written in Go (why Go fits cloud infrastructure), WebAssembly (`GOOS=js`, `wasip1`), TinyGo
 
 🛠 **Practice** — L1: build a small CLI with cobra (e.g. a todo or a log analyzer) · L2: compile a Go function to WebAssembly and call it from a web page
+
+---
+
+## GO 24 — How Go compiles (📖 Anatomy of Go Ch5)
+**L1 — aware & can use**
+- ⬜ **24.1 The build pipeline** — compile per package → link, `go build -x` / `-work`, object files, what the linker does (Ch5 §5.1–5.2)
+
+**L3 — internals (📖 Anatomy of Go)**
+- ⬜ **24.2 Parsing** — scanner and tokens, automatic semicolons, parser and the syntax tree (Ch5 §5.3)
+- ⬜ **24.3 Type checking** — package-level declarations, function bodies, scope resolution, package variable initialization order (Ch5 §5.4)
+- ⬜ **24.4 IR & export data** — IR nodes, export data between packages, relocations (Ch5 §5.5)
+- ⬜ **24.5 Optimizations** — dead code elimination, devirtualization, inlining and its budget, escape analysis (`-gcflags=-m`) (Ch5 §5.6)
+- ⬜ **24.6 Walk & order** — how the middle end rewrites high-level statements into runtime calls (Ch5 §5.7)
+- ⬜ **24.7 SSA** — SSA form, building SSA from IR, SSA passes, reading `GOSSAFUNC` output (Ch5 §5.8)
+- ⬜ **24.8 Machine code & Go assembly** — code generation, reading `go tool compile -S` and `go tool objdump` output (Ch5 §5.9)
+
+📖 **Anatomy of Go:** Ch5 (p.259–413)
+
+🛠 **Practice** — L1: build a two-package program with `go build -x -work` and name each step · L3: dump `GOSSAFUNC=main` for a small function and explain 3 passes; find one inlined and one escaped variable with `-gcflags=-m=2`

@@ -26,7 +26,13 @@ This file is the source of truth for teaching behavior. It must stay complete: s
 ## Teaching Flow
 **Layers:** L1 = aware & can use (what, why, how to use) · L2 = deep & efficient (internals, trade-offs, edge cases, efficient use).
 
-**Check mode** (default for Go — the user already knows much of it): ask 3–5 questions **one by one**. Answered well → mark ✅, move on fast. Gaps → switch to learn mode for those parts only.
+**Layer L3** (Go only) = internals at the depth of the book *The Anatomy of Go* (Phuong Le). The user owns the book and wants to master it. Each Go topic has a `📖 Anatomy of Go:` line (chapter, section, PDF pages). The PDF is not in the repo; in a new session ask the user to attach it when book content is needed.
+
+**Read → recall → check** (default for Go — the user asked for this): never start with questions.
+1. First give a reading note `notes/golang/<NN>-<topic-slug>.md` (format: `notes/README.md`) + the exact book pages to read alongside. The note explains in my own words; never copy book text.
+2. The user reads, then tries the note's recall questions alone.
+3. Then check mode: 3–5 questions **one by one**. Answered well → mark ✅, move on fast. Gaps → learn mode for those parts only.
+4. Book depth (L3) questions come after L1/L2 of the same topic are ✅.
 
 **Learn mode — per-topic flow:**
 1. Show the PROBLEM that existed before the concept
