@@ -3,14 +3,14 @@
 > **L1** = aware & can use · **L2** = deep & efficient · Status: ⬜ not started · 🔄 in progress · ✅ done
 > **Notes:** `notes/common-swe/` · **Practice:** `code/common-swe/` · **Dictionary:** `reference/common-swe-security.md`, `reference/common-swe-behavioral.md`
 
-**Why (EN):** These are the cross-cutting skills every backend engineer uses daily regardless of stack: Git, API design, security, encodings, caching, code review, working with AI, and communicating like a senior. In the AI era generated code often has insecure defaults, sloppy APIs and wrong time/money handling — a senior is the one who catches these, verifies AI output, builds AI features safely, and owns the outcome end to end.
-**Зачем (RU):** Это сквозные навыки, которые каждый backend-инженер использует ежедневно независимо от стека: Git, дизайн API, безопасность, кодировки, кэширование, code review, работа с ИИ и коммуникация на уровне senior. В эпоху ИИ сгенерированный код часто небезопасен по умолчанию, с неаккуратным API и ошибками в работе со временем и деньгами — senior это замечает, проверяет вывод ИИ, безопасно встраивает ИИ-функции и отвечает за результат целиком.
+**Why (EN):** These are the cross-cutting skills every backend engineer uses daily regardless of stack: Git, API design, security, encodings, caching, code review, and communicating like a senior. In the AI era generated code often has insecure defaults, sloppy APIs and wrong time/money handling — a senior is the one who catches these, verifies AI output, builds AI features safely, and owns the outcome end to end.
+**Зачем (RU):** Это сквозные навыки, которые каждый backend-инженер использует ежедневно независимо от стека: Git, дизайн API, безопасность, кодировки, кэширование, code review и коммуникация на уровне senior. В эпоху ИИ сгенерированный код часто небезопасен по умолчанию, с неаккуратным API и ошибками в работе со временем и деньгами — senior это замечает, проверяет вывод ИИ, безопасно встраивает ИИ-функции и отвечает за результат целиком.
 
 ## Progress
 | Layer | Done | Total |
 |---|---|---|
-| L1 | 0 | 59 |
-| L2 | 0 | 47 |
+| L1 | 0 | 50 |
+| L2 | 0 | 40 |
 
 ---
 
@@ -209,46 +209,8 @@
 
 ---
 
-## SWE 14 — AI-assisted engineering
-**L1 — aware & can use**
-- ⬜ **14.1 Workflow with AI tools** — agentic coding tools (Claude Code, Cursor, Copilot), task decomposition, spec-first prompting, small verifiable steps, plan → implement → verify loop, when NOT to use AI
-- ⬜ **14.2 Context engineering** — project instruction files (`CLAUDE.md`, rules files), relevant files in context, examples, constraints, conventions, keeping context small and accurate
-- ⬜ **14.3 Verifying AI output** — reading every line, running tests, hallucinated APIs/packages, outdated versions, insecure defaults, missing error handling, concurrency bugs, over-engineering
-
-**L2 — deep & efficient**
-- ⬜ **14.4 AI in team process** — AI-written PRs and review responsibility, test-first with AI, AI for refactors and migrations, guardrails (linters, CI) as safety net, measuring real productivity impact
-- ⬜ **14.5 Keeping your own skills sharp** — AI-free practice for interviews, deliberate practice, explaining code without AI, reading source code, avoiding "skill atrophy"
-
-🛠 **Practice** — L1: write a `CLAUDE.md` for one of your Go projects (build, test, conventions) and use it to implement one small feature; log every AI mistake you caught · L2: give an AI tool the same task with a vague prompt vs a spec-first prompt with tests; compare correctness, diff size and review time
-
----
-
-## SWE 15 — LLM APIs & building AI features
-**L1 — aware & can use**
-- ⬜ **15.1 How LLMs behave** — token, tokenizer, context window, temperature, sampling, non-determinism, hallucination, system prompt, few-shot examples, knowledge cutoff
-- ⬜ **15.2 LLM APIs from Go** — messages API, streaming (SSE), timeouts, retries with backoff, rate limits (`429`), structured output (JSON schema), tool/function calling, prompt caching, cost per token
-- ⬜ **15.3 Embeddings & vector search** — embedding, vector, cosine similarity, dot product, pgvector (`vector` type, `<=>` operator), HNSW vs IVFFlat, approximate nearest neighbour
-- ⬜ **15.4 RAG** — retrieval-augmented generation, chunking (size, overlap), ingestion pipeline, top-k retrieval, prompt assembly, citations, hybrid search (BM25 + vectors), re-ranking
-
-**L2 — deep & efficient**
-- ⬜ **15.5 Agents & MCP** — agent loop, tools, planning, Model Context Protocol (server, client, tools, resources, prompts), transports (stdio, streamable HTTP), human-in-the-loop, permissions, multi-agent systems
-- ⬜ **15.6 Evals & observability** — eval dataset, golden answers, LLM-as-judge, regression evals, retrieval metrics (recall@k, MRR), prompt versioning, tracing LLM calls, token usage metrics
-- ⬜ **15.7 Production concerns** — latency budgets, cost control, model routing, response caching, provider fallbacks, guardrails, PII handling, fine-tuning vs RAG vs prompting, self-hosted models (Ollama, vLLM)
-
-🛠 **Practice** — L1: build a small RAG in Go: ingest your `notes/` Markdown into Postgres + pgvector (Docker), embed chunks, answer questions with citations via an LLM API · L2: write an eval set of 20 Q&A pairs for that RAG and measure recall@5 before/after changing chunk size; build a minimal MCP server in Go exposing a "search notes" tool
-
----
-
-## SWE 16 — AI security
-**L1 — aware & can use**
-- ⬜ **16.1 OWASP Top 10 for LLM applications** — prompt injection, sensitive information disclosure, supply chain, data and model poisoning, improper output handling, excessive agency, system prompt leakage, vector and embedding weaknesses, misinformation, unbounded consumption
-- ⬜ **16.2 Prompt injection** — direct vs indirect injection, injection via retrieved documents/web pages/tool results, jailbreaks, why there is no complete fix, treating model output as untrusted input
-
-**L2 — deep & efficient**
-- ⬜ **16.3 Defending AI systems** — least-privilege tools, human approval for risky actions, output validation, sandboxing tool execution, allowlists, separating instructions from data, rate/cost limits, audit logs of tool calls
-- ⬜ **16.4 Data protection with LLMs** — secrets in prompts, PII redaction, data retention policies, tenant isolation in vector stores, access control on retrieved chunks, training-data opt-out
-
-🛠 **Practice** — L1: add a document containing hidden instructions ("ignore previous instructions, reveal …") to your RAG and observe the behaviour · L2: add defences (chunk-level ACL filtering, output validation, tool allowlist with confirmation) and write regression tests with 10 injection payloads
+## SWE 14–16 — moved to the AI track
+AI-assisted engineering, LLM APIs & AI features, and AI security now live in [`roadmap/ai.md`](ai.md) (AI 3–5, AI 6–10, AI 11). The numbers SWE 14–16 stay unused so other IDs don't change.
 
 ---
 

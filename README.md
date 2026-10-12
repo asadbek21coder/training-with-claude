@@ -13,7 +13,7 @@ Go backend engineer → senior. Every track has the same three parts:
 **Why each area matters, AI-era priorities, books:** `reference/00-senior-engineer-guide.md`
 
 ## Tracks
-`golang` (main now) · `algorithms-ds` · `english` · `russian` (daily, parallel) · `postgres` · `system-design` · `os` · `linux` · `networking` · `devops` · `common-swe` (auth, hashing, security, API design, Git, AI, career) · `qa` · `design-patterns`
+`golang` (main now) · `algorithms-ds` · `english` · `russian` · `ai` (daily, parallel) · `postgres` · `system-design` · `os` · `linux` · `networking` · `devops` · `common-swe` (auth, hashing, security, API design, Git, career) · `qa` · `design-patterns`
 
 ## Daily routine
 | Block | Time | What |

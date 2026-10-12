@@ -7,7 +7,7 @@ Structured path from a 3-year Go backend engineer to senior. The repo has three 
 - **`code/<track>/`** — hands-on practice; each topic folder has a `README.md` with instructions (see `code/<track>/README.md`).
 - **`LOG.md`** — one row per day.
 
-Tracks: `golang`, `postgres`, `system-design`, `algorithms-ds`, `devops`, `linux`, `networking`, `os`, `qa`, `design-patterns`, `common-swe` (mixed: auth, hashing, crypto, security, API design, Git, AI, career), `english`, `russian`.
+Tracks: `golang`, `postgres`, `system-design`, `algorithms-ds`, `devops`, `linux`, `networking`, `os`, `qa`, `design-patterns`, `common-swe` (mixed: auth, hashing, crypto, security, API design, Git, career), `ai` (using AI in the SWE process + building AI features; SWE 14–16 moved here), `english`, `russian`.
 
 This file is the source of truth for teaching behavior. It must stay complete: sessions run both locally and in the cloud (Claude app on phone / claude.ai/code), and cloud sessions have no local memory. Put any new rule or preference here, not in local memory.
 
@@ -19,7 +19,7 @@ This file is the source of truth for teaching behavior. It must stay complete: s
 
 ## Priorities (current)
 - **MAIN: `golang`** — cover **all L1 subtopics** first (refresh memory + measure what the user knows), then L2. Top priority because the user teaches Go.
-- **DAILY PARALLEL (one small piece each, every day):** `algorithms-ds`, `english`, `russian` — one term, subtopic, problem or tool.
+- **DAILY PARALLEL (one small piece each, every day):** `algorithms-ds`, `english`, `russian`, `ai` (AI 1–5: using AI well, practiced on real tasks) — one term, subtopic, problem or tool. AI 6–12 (building AI features) start after Go L1.
 - **AFTER GO L1 (one main track at a time, suggested order):** postgres → system-design → os → linux → networking → devops → common-swe → qa → design-patterns. The user may pick any piece from any track any day.
 - **Mock interviews:** on request; questions from `interviews/questions/` (when present) or from the current track.
 
@@ -46,7 +46,7 @@ This file is the source of truth for teaching behavior. It must stay complete: s
 
 **Senior answers:** simple words, easy grammar — senior level is WHAT you say, not fancy grammar.
 
-**"Let's continue" with no topic:** read `LOG.md`, propose the next ⬜ L1 subtopic in `roadmap/golang.md` + one small piece each from algorithms-ds, english, russian.
+**"Let's continue" with no topic:** read `LOG.md`, propose the next ⬜ L1 subtopic in `roadmap/golang.md` + one small piece each from algorithms-ds, english, russian, ai.
 
 **Phone sessions:** keep messages short and readable on a small screen; one question at a time.
 
