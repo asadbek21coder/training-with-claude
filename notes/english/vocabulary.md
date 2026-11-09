@@ -114,3 +114,6 @@
 | "which **approach** should we choose" | spelling: a-pp-r-o-a-c-h |
 | "**best practices**" | spelling: p-r-a-c-t-i-c-e-s; plural |
 | "I want to train myself **until then**" | "until it" is not used for time; use "until then" / "before that" |
+| "**I don't** get it" | capital I; apostrophe in don't |
+| "What do you recommend for **simulating** our work **locally** first?" | recommend + noun / -ing; "locally", not "in local" |
+| "**setting up** a server locally" | set up = install and configure |
