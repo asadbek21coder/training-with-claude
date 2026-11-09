@@ -20,6 +20,7 @@ This file is the source of truth for teaching behavior. It must stay complete: s
 ## Priorities (current)
 - **MAIN: `golang`** — cover **all L1 subtopics** first (refresh memory + measure what the user knows), then L2. Top priority because the user teaches Go.
 - **DAILY PARALLEL (one small piece each, every day):** `algorithms-ds`, `english`, `russian`, `ai` (AI 1–5: using AI well, practiced on real tasks) — one term, subtopic, problem or tool. AI 6–12 (building AI features) start after Go L1.
+- **TIME-BOXED: `devops` OPS 22 (deployment track)** — the user wants to be ready to deploy the work project (SAT ERP) before its first production deploy (spring 2027). Follow the week-by-week order in `roadmap/devops.md` OPS 22; it pulls topics from OPS, LX, NET and PG ahead of the normal order. The user may use the main block for it.
 - **AFTER GO L1 (one main track at a time, suggested order):** postgres → system-design → os → linux → networking → devops → common-swe → qa → design-patterns. The user may pick any piece from any track any day.
 - **Mock interviews:** on request; questions from `interviews/questions/` (when present) or from the current track.
 

@@ -8,3 +8,4 @@ One row per day. Use IDs from `roadmap/<track>.md` (e.g. `GO 8.4`, `DSA 7.2`, `E
 | 2026-10-08 | GO 1.1 ✅ (check mode) | — | "until", "unnecessary", "a new approach to", "inheritance" | — | GO 1.1 check ✔; missed GC + team-friendliness in goals |
 | 2026-10-10 | Setup: *Anatomy of Go* mapped → L3 layer (33 subtopics) + GO 24 compiler; reading notes GO 4, GO 5, GO 12 | — | "help me with tutoring", "in detail", "how much I know about" | — | flow changed to read → recall → check; go-course repo connected |
 | 2026-10-12 | — (course: exercises rewritten, 9 topics × EN/UZ) | — | "What is inside the DevOps track?", "Do we have such a track, or do we need one?" | — | new `ai` track (AI 1–12), SWE 14–16 moved there |
+| 2026-11-09 | — (new devops OPS 22 deployment track: stages 0–3, 11 subtopics, 16-week order) | — | "approach", "best practices", "until then" | — | OPS 22 added; time-boxed before the work project's first deploy |

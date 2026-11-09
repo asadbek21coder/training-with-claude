@@ -16,18 +16,19 @@
 | Operating systems | [os.md](os.md) | OS | ⏭ later | 11 | 0 / 31 | 0 / 22 |
 | Linux | [linux.md](linux.md) | LX | ⏭ later | 15 | 0 / 41 | 0 / 29 |
 | Networking | [networking.md](networking.md) | NET | ⏭ later | 21 | 0 / 50 | 0 / 32 |
-| DevOps, cloud & SRE | [devops.md](devops.md) | OPS | ⏭ later | 21 | 0 / 59 | 0 / 49 |
+| DevOps, cloud & SRE | [devops.md](devops.md) | OPS | ⏭ later · ⏱ **OPS 22 now** (deployment track) | 22 | 0 / 65 | 0 / 54 |
 | AI engineering (using AI in SWE + building AI features) | [ai.md](ai.md) | AI | 📅 daily (AI 1–5) | 12 | 0 / 24 | 0 / 21 |
 | Common SWE (Git, auth, crypto, security, API design, career) | [common-swe.md](common-swe.md) | SWE | ⏭ later | 15 | 0 / 50 | 0 / 40 |
 | QA & testing | [qa.md](qa.md) | QA | ⏭ later | 19 | 0 / 44 | 0 / 27 |
 | Design patterns & architecture | [design-patterns.md](design-patterns.md) | DP | ⏭ later | 13 | 0 / 38 | 0 / 29 |
-| **Total** | | | | **227** | **24 / 614** | **0 / 513** |
+| **Total** | | | | **228** | **24 / 620** | **0 / 518** |
 
 ## Order
 ```
 NOW:     golang — all L1 first (refresh + measure), then L2
 DAILY:   algorithms-ds · english · russian · ai (AI 1–5) — one small piece each, every day
 AI 6–12: after Go L1 (building AI features)
+TIME-BOX: devops OPS 22 (deployment track) — before the work project's first deploy (spring 2027); weekly order in devops.md OPS 22
 NEXT:    postgres → system-design → os → linux → networking → devops → common-swe → qa → design-patterns
 ```
 Any track, any day is fine for a quick piece (e.g. one term from common-swe while reading about JWT at work) — the order is for the **main** 40–50 minute block.

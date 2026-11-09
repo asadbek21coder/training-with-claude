@@ -11,8 +11,8 @@
 ## Progress
 | Layer | Done | Total |
 |---|---|---|
-| L1 | 0 | 59 |
-| L2 | 0 | 49 |
+| L1 | 0 | 65 |
+| L2 | 0 | 54 |
 
 ---
 
@@ -310,3 +310,52 @@
 - ⬜ **21.3 Cost optimization** — rightsizing, autoscaling to zero, Graviton / ARM instances, spot for stateless workloads, k8s requests vs real usage (bin packing), OpenCost / Kubecost, idle resources cleanup, log & metric volume costs, Infracost in PRs
 
 🛠 **Practice** — L1: estimate the monthly cost of the Go service + RDS + ALB + NAT Gateway in 2 AZs with the AWS Pricing Calculator and list the top 3 cost drivers · L2: run Infracost on the Terraform code from OPS 11 and write a cost diff comment for a PR that changes instance size
+
+---
+
+## OPS 22 — Applied track: deploying the work project (SAT ERP, Core + 1 module)
+> **Time-boxed:** learn this **before** the work project's first production deploy (after its backend has Core + 1 module; target spring 2027). It reuses topics from OPS 1–21, LX, NET and PG — the learning order below shows which ID to study in which week. 22.x subtopics are the project-specific parts.
+
+**Why (EN):** The work project is a Go modular monolith (one binary: `serve`, `worker`, `migrate`, `admin`) on PostgreSQL with River jobs and goose migrations, hosted on VMs in a local (Uzbek) cloud because personal data must stay in the country. The team is small, load is small, so the plan is **boring and safe**: containers on plain VMs with Docker Compose, everything in code, one image promoted dev → staging → prod, and grow (Patroni, more databases, Kubernetes) only when a measured limit forces it. Every tool you add is a tool you must patch, monitor and restore at 2 a.m.
+**Зачем (RU):** Рабочий проект — модульный монолит на Go (один бинарник: `serve`, `worker`, `migrate`, `admin`) на PostgreSQL с задачами River и миграциями goose; хостинг — виртуальные машины в местном (узбекском) облаке, потому что персональные данные должны оставаться в стране. Команда маленькая, нагрузка маленькая, поэтому план **скучный и надёжный**: контейнеры на обычных ВМ с Docker Compose, всё в коде, один образ продвигается dev → staging → prod, а усложнение (Patroni, больше баз, Kubernetes) — только когда измеренный предел этого требует. Каждый новый инструмент нужно обновлять, мониторить и восстанавливать в 2 часа ночи.
+
+### Evolution of deployment (what to use at each stage)
+| Stage | When | Deploy & infra | Data | Observability |
+|---|---|---|---|---|
+| **0 — Local** | now, while learning | Docker Compose on the laptop, `Makefile`/Taskfile = same commands locally and in CI | Postgres in a container, named volume | `slog` JSON to stdout |
+| **1 — First production** | Core + 1 module live | 3 VMs (app: 2× `serve` behind Caddy · `worker` + Postgres primary · replica in another zone), Docker Compose, Ansible for servers, GitHub Actions CI → GHCR → SSH deploy, SOPS + age for secrets | streaming replica, pgBackRest/WAL-G → S3, PITR, RPO ≤ 15 min, RTO ≤ 4 h | Prometheus, Grafana, Loki, Tempo, Alertmanager → Telegram, Uptime Kuma, GlitchTip/Sentry |
+| **2 — Several organizations** | more clients, dedicated databases | blue-green via Caddy, fleet migration runner (all DBs at schema N or N−1), OpenTofu if the provider supports it | Patroni (automatic failover ≤ 5 min), one DB per dedicated client | per-database dashboards and alerts |
+| **3 — Scale** | **only** if > 5 tenants or CPU > 60 % sustained | k3s / Kubernetes, Helm, Argo CD (GitOps) — OPS 6–10 | CloudNativePG operator or managed Postgres | Prometheus Operator, OTel Collector |
+
+**L1 — aware & can use**
+- ⬜ **22.1 Approach & evolution** — "boring technology", VM + Docker Compose first, stages 0–3, triggers to grow (tenants, CPU, team size), why not Kubernetes on day one, build once → promote one image dev → staging → prod, staging with synthetic data only, data residency (personal data hosted in the country)
+- ⬜ **22.2 Target topology** — 3 VMs (app / worker + DB primary / DB replica in another zone), Caddy reverse proxy + automatic TLS, one binary with subcommands (`serve`, `worker`, `migrate`, `admin`), S3-compatible object storage per environment, `deploy/` folder in the monorepo, static frontend hosting vs API hosting
+- ⬜ **22.3 Server baseline with Ansible** — non-root deploy user, SSH keys only (no password login), `ufw` firewall, `fail2ban`, `unattended-upgrades`, Docker + Compose plugin, node-exporter, time sync, journald retention, rebuild a server from scratch with one command
+- ⬜ **22.4 The project pipeline** — GitHub Actions: `golangci-lint`, `go test -race` with testcontainers (real Postgres), regenerate code (`sqlc`, `oapi-codegen`, `openapi-typescript`) and fail on diff, `govulncheck`, `docker build`, Trivy scan, push to GHCR tagged with git SHA; deploy job: `migrate` → `docker compose pull && up -d` → health check; staging = automatic, prod = manual approval, deploy after operating hours
+- ⬜ **22.5 App-side production readiness** — `/healthz` (alive) vs `/readyz` (DB reachable), `/version` with git SHA, graceful shutdown of HTTP **and** River workers, 12-factor config from env, `slog` JSON with trace ID, migrations as a separate step (never on app start), fail fast on bad config
+- ⬜ **22.6 Secrets & config per environment** — SOPS + age (encrypted files in Git) vs the provider's secret store, `.env` per environment, never in images or logs, DB roles: owner (migrations) / app (no DDL, RLS-bound) / monitor (read stats), credential rotation
+
+**L2 — deep & efficient**
+- ⬜ **22.7 Postgres in production** — streaming replica in another zone, WAL archiving with pgBackRest or WAL-G to S3, PITR, RPO ≤ 15 min, RTO ≤ 4 h (full restore) / ≤ 30 min (failover), daily base backup kept 35 days + monthly 12 months, encrypted copy in a 2nd data centre, quarterly restore drill, Patroni for automatic failover, connection limits and pooling
+- ⬜ **22.8 Observability for this project** — RED dashboards per module, alerts on 5xx rate, p95 latency, outbox lag > 60 s, dead-letter jobs > 0, job/timer lag, replica lag, disk; external uptime check; error tracking; alert routing to Telegram + on-call rotation; runbook link in every alert
+- ⬜ **22.9 Zero-downtime releases** — 2 `serve` instances + Caddy (rolling or blue-green), expand-and-contract migrations, old and new app versions on one schema (N / N−1), River job payload compatibility during a deploy, rollback = previous image tag + roll forward the DB, release freeze on peak days
+- ⬜ **22.10 Many databases (stage 2)** — one DB per dedicated client, routing registry, fleet migration runner (apply to all, report who is behind), per-database backups and monitoring, isolation of failures (one slow DB must not slow others), OpenTofu for VMs/buckets if a provider exists
+- ⬜ **22.11 Load tests, drills & runbooks** — k6 at 2× the expected size, game day: kill the primary, fill the disk, deploy a bad migration, restore to "last Tuesday 14:00"; incident runbook, postmortem template, measured RTO/RPO written down
+
+### Learning order (about 16 weeks, before the first deploy)
+| Weeks | Study (IDs) | Done when you can… |
+|---|---|---|
+| 1–2 | LX 3, LX 8, LX 12, NET 8, NET 13 | set up and harden a VPS by hand (users, SSH keys, firewall, systemd service) |
+| 3–4 | OPS 1–3, **22.5** | build a < 30 MB non-root Go image; run app + Postgres + migrate in Compose; prove graceful shutdown |
+| 5–6 | PG 10.2–10.6, **22.7** (L1 part) | restore to a point in time and promote a replica |
+| 7–8 | OPS 4, OPS 20.1–20.2, **22.4** | go from `git push` to a deployed, health-checked staging |
+| 9 | OPS 12, **22.3**, **22.6** | rebuild a server from zero with one Ansible command; secrets only in SOPS files |
+| 10–11 | OPS 15–17, OPS 18.3, **22.8** | follow one slow request from an alert → trace → SQL query |
+| 12 | NET 14, OPS 5.1, **22.1**, **22.2**, **22.9** (Caddy part) | deploy with zero downtime behind Caddy |
+| 13 | PG 11.3, OPS 5.4, **22.9** | rename a column with zero downtime in 3 deploys |
+| 14 | OPS 20, PG 10.8 | pipeline fails on HIGH/CRITICAL CVEs; app role cannot do DDL |
+| 15–16 | OPS 19, **22.11** | run a game day and write the runbook + postmortem |
+| After first deploy | **22.10**, OPS 11, OPS 18.4 | stage 2 when a second database is needed |
+| Only when stage 3 triggers | OPS 6–10 | Kubernetes when a measured limit forces it |
+
+🛠 **Practice** — `code/devops/22-deployment-track/` — **ship-lab**: a small Go service shaped like the work project (one binary: `serve` / `worker` / `migrate`; chi, pgx, River, goose; `/healthz`, `/readyz`, `/version`). L1: take it through stage 1 on 1–2 cheap VPSs — Ansible baseline, Compose, Caddy + TLS, GitHub Actions → GHCR → SSH deploy with approval for "prod", SOPS secrets, pgBackRest to S3-compatible storage · L2: add a replica + Patroni, Prometheus/Grafana/Loki/Tempo + Telegram alerts, blue-green deploy, a k6 load test, then break it on purpose (kill primary, full disk, bad migration, restore to a timestamp) and record measured RTO/RPO in the README

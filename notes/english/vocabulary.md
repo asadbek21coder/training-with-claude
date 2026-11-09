@@ -111,3 +111,6 @@
 | "**normally**", "**I've** learnt", "I **don't** know" | spelling / apostrophes |
 | "algorithms (**algo**) & data structures" | short form: algo, DS&A |
 | "skill, **module**, or **track**" | track = a learning path; module = a part of a course |
+| "which **approach** should we choose" | spelling: a-pp-r-o-a-c-h |
+| "**best practices**" | spelling: p-r-a-c-t-i-c-e-s; plural |
+| "I want to train myself **until then**" | "until it" is not used for time; use "until then" / "before that" |
