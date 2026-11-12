@@ -11,7 +11,7 @@
 ## Progress
 | Layer | Done | Total |
 |---|---|---|
-| L1 | 0 | 65 |
+| L1 | 0 | 66 |
 | L2 | 0 | 54 |
 
 ---
@@ -64,7 +64,7 @@
 **L1 — aware & can use**
 - ⬜ **4.1 CI/CD concepts** — continuous integration, continuous delivery vs continuous deployment, pipeline stages (lint → test → build → scan → publish → deploy), fail fast, build once deploy many, artifact
 - ⬜ **4.2 GitHub Actions** — workflow, `on:` triggers, job, step, `runs-on`, `uses:` actions, `needs`, matrix, `actions/cache`, artifacts, secrets, variables, environments
-- ⬜ **4.3 GitLab CI (mapping)** — `.gitlab-ci.yml`, stages, jobs, runners, `rules`, cache vs artifacts, CI/CD variables, protected branches, environments
+- 🔄 **4.3 GitLab CI** *(the work project's CI since 2026-11-11 — note `notes/devops/22-gitlab-cicd.md`)* — `.gitlab-ci.yml`, stages, jobs, runners (instance / group / project), executors (docker, shell), `rules`, `workflow:rules`, `needs`, cache vs artifacts, CI/CD variables (protected, masked, environment scope), predefined variables (`CI_COMMIT_SHA`, `CI_REGISTRY_IMAGE`, `CI_PIPELINE_SOURCE`), environments, `resource_group`, `when: manual`, Container Registry, merge request pipelines
 
 **L2 — deep & efficient**
 - ⬜ **4.4 Fast & reliable pipelines** — caching Go modules and build cache, test parallelism, path filters, `concurrency` groups, flaky test quarantine, self-hosted runners, pipeline duration as a metric
@@ -323,7 +323,7 @@
 | Stage | When | Deploy & infra | Data | Observability |
 |---|---|---|---|---|
 | **0 — Local** | now, while learning | Docker Compose on the laptop, `Makefile`/Taskfile = same commands locally and in CI | Postgres in a container, named volume | `slog` JSON to stdout |
-| **1 — First production** | Core + 1 module live | 3 VMs (app: 2× `serve` behind Caddy · `worker` + Postgres primary · replica in another zone), Docker Compose, Ansible for servers, GitHub Actions CI → GHCR → SSH deploy, SOPS + age for secrets | streaming replica, pgBackRest/WAL-G → S3, PITR, RPO ≤ 15 min, RTO ≤ 4 h | Prometheus, Grafana, Loki, Tempo, Alertmanager → Telegram, Uptime Kuma, GlitchTip/Sentry |
+| **1 — First production** | Core + 1 module live | 3 VMs (app: 2× `serve` behind Caddy · `worker` + Postgres primary · replica in another zone), Docker Compose, Ansible for servers, GitLab CI on our own runner → GitLab Container Registry → SSH deploy, SOPS + age for secrets | streaming replica, pgBackRest/WAL-G → S3, PITR, RPO ≤ 15 min, RTO ≤ 4 h | Prometheus, Grafana, Loki, Tempo, Alertmanager → Telegram, Uptime Kuma, GlitchTip/Sentry |
 | **2 — Several organizations** | more clients, dedicated databases | blue-green via Caddy, fleet migration runner (all DBs at schema N or N−1), OpenTofu if the provider supports it | Patroni (automatic failover ≤ 5 min), one DB per dedicated client | per-database dashboards and alerts |
 | **3 — Scale** | **only** if > 5 tenants or CPU > 60 % sustained | k3s / Kubernetes, Helm, Argo CD (GitOps) — OPS 6–10 | CloudNativePG operator or managed Postgres | Prometheus Operator, OTel Collector |
 
@@ -331,9 +331,10 @@
 - ⬜ **22.1 Approach & evolution** — "boring technology", VM + Docker Compose first, stages 0–3, triggers to grow (tenants, CPU, team size), why not Kubernetes on day one, build once → promote one image dev → staging → prod, staging with synthetic data only, data residency (personal data hosted in the country)
 - ⬜ **22.2 Target topology** — 3 VMs (app / worker + DB primary / DB replica in another zone), Caddy reverse proxy + automatic TLS, one binary with subcommands (`serve`, `worker`, `migrate`, `admin`), S3-compatible object storage per environment, `deploy/` folder in the monorepo, static frontend hosting vs API hosting
 - ⬜ **22.3 Server baseline with Ansible** — non-root deploy user, SSH keys only (no password login), `ufw` firewall, `fail2ban`, `unattended-upgrades`, Docker + Compose plugin, node-exporter, time sync, journald retention, rebuild a server from scratch with one command
-- ⬜ **22.4 The project pipeline** — GitHub Actions: `golangci-lint`, `go test -race` with testcontainers (real Postgres), regenerate code (`sqlc`, `oapi-codegen`, `openapi-typescript`) and fail on diff, `govulncheck`, `docker build`, Trivy scan, push to GHCR tagged with git SHA; deploy job: `migrate` → `docker compose pull && up -d` → health check; staging = automatic, prod = manual approval, deploy after operating hours
+- ⬜ **22.4 The project pipeline** — GitLab CI (`.gitlab-ci.yml`, own runner): `golangci-lint`, `go test -race` with testcontainers (real Postgres), regenerate code (`sqlc`, `oapi-codegen`, `openapi-typescript`) and fail on diff, `govulncheck`, `docker build`, Trivy scan, push to the GitLab Container Registry tagged with git SHA; deploy job: `migrate` → `docker compose pull && up -d` → health check; staging = automatic on `main`, prod = protected `v*` tag + manual job, deploy after operating hours
 - ⬜ **22.5 App-side production readiness** — `/healthz` (alive) vs `/readyz` (DB reachable), `/version` with git SHA, graceful shutdown of HTTP **and** River workers, 12-factor config from env, `slog` JSON with trace ID, migrations as a separate step (never on app start), fail fast on bad config
 - ⬜ **22.6 Secrets & config per environment** — SOPS + age (encrypted files in Git) vs the provider's secret store, `.env` per environment, never in images or logs, DB roles: owner (migrations) / app (no DDL, RLS-bound) / monitor (read stats), credential rotation
+- 🔄 **22.12 GitLab platform setup** *(added 2026-11-12; done hands-on on the work repo — note `notes/devops/22-gitlab-cicd.md`)* — company-owned group → subgroup per product → project, roles (Owner / Maintainer / Developer / Reporter), lowest role that works, enforced 2FA + recovery codes, SSH keys, protected branch `main` (merge = Maintainers, push = no one), protected tags `v*`, MR settings (fast-forward, squash, threads resolved, pipelines must succeed), instance runners off + project runner, deploy tokens, Free vs Premium limits
 
 **L2 — deep & efficient**
 - ⬜ **22.7 Postgres in production** — streaming replica in another zone, WAL archiving with pgBackRest or WAL-G to S3, PITR, RPO ≤ 15 min, RTO ≤ 4 h (full restore) / ≤ 30 min (failover), daily base backup kept 35 days + monthly 12 months, encrypted copy in a 2nd data centre, quarterly restore drill, Patroni for automatic failover, connection limits and pooling
@@ -345,6 +346,7 @@
 ### Learning order (about 16 weeks, before the first deploy)
 | Weeks | Study (IDs) | Done when you can… |
 |---|---|---|
+| now (Nov 12) | **22.12**, OPS 4.3 | set up the work GitLab group and repo yourself and explain every setting (note 22-gitlab-cicd) |
 | 1–2 | LX 3, LX 8, LX 12, NET 8, NET 13 | set up and harden a VPS by hand (users, SSH keys, firewall, systemd service) |
 | 3–4 | OPS 1–3, **22.5** | build a < 30 MB non-root Go image; run app + Postgres + migrate in Compose; prove graceful shutdown |
 | 5–6 | PG 10.2–10.6, **22.7** (L1 part) | restore to a point in time and promote a replica |
@@ -358,4 +360,4 @@
 | After first deploy | **22.10**, OPS 11, OPS 18.4 | stage 2 when a second database is needed |
 | Only when stage 3 triggers | OPS 6–10 | Kubernetes when a measured limit forces it |
 
-🛠 **Practice** — `code/devops/22-deployment-track/` — **ship-lab**: a small Go service shaped like the work project (one binary: `serve` / `worker` / `migrate`; chi, pgx, River, goose; `/healthz`, `/readyz`, `/version`). L1: take it through stage 1 on 1–2 cheap VPSs — Ansible baseline, Compose, Caddy + TLS, GitHub Actions → GHCR → SSH deploy with approval for "prod", SOPS secrets, pgBackRest to S3-compatible storage · L2: add a replica + Patroni, Prometheus/Grafana/Loki/Tempo + Telegram alerts, blue-green deploy, a k6 load test, then break it on purpose (kill primary, full disk, bad migration, restore to a timestamp) and record measured RTO/RPO in the README
+🛠 **Practice** — `code/devops/22-deployment-track/` — **ship-lab**: a small Go service shaped like the work project (one binary: `serve` / `worker` / `migrate`; chi, pgx, River, goose; `/healthz`, `/readyz`, `/version`). L1: take it through stage 1 on 1–2 cheap VPSs — Ansible baseline, Compose, Caddy + TLS, GitLab CI on a project runner → GitLab Container Registry → SSH deploy, prod only from a protected `v*` tag, SOPS secrets, pgBackRest to S3-compatible storage · L2: add a replica + Patroni, Prometheus/Grafana/Loki/Tempo + Telegram alerts, blue-green deploy, a k6 load test, then break it on purpose (kill primary, full disk, bad migration, restore to a timestamp) and record measured RTO/RPO in the README

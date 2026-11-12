@@ -16,12 +16,12 @@
 | Operating systems | [os.md](os.md) | OS | ⏭ later | 11 | 0 / 31 | 0 / 22 |
 | Linux | [linux.md](linux.md) | LX | ⏭ later | 15 | 0 / 41 | 0 / 29 |
 | Networking | [networking.md](networking.md) | NET | ⏭ later | 21 | 0 / 50 | 0 / 32 |
-| DevOps, cloud & SRE | [devops.md](devops.md) | OPS | ⏭ later · ⏱ **OPS 22 now** (deployment track) | 22 | 0 / 65 | 0 / 54 |
+| DevOps, cloud & SRE | [devops.md](devops.md) | OPS | ⏭ later · ⏱ **OPS 22 now** (deployment track) | 22 | 0 / 66 | 0 / 54 |
 | AI engineering (using AI in SWE + building AI features) | [ai.md](ai.md) | AI | 📅 daily (AI 1–5) | 12 | 0 / 24 | 0 / 21 |
 | Common SWE (Git, auth, crypto, security, API design, career) | [common-swe.md](common-swe.md) | SWE | ⏭ later | 15 | 0 / 50 | 0 / 40 |
 | QA & testing | [qa.md](qa.md) | QA | ⏭ later | 19 | 0 / 44 | 0 / 27 |
 | Design patterns & architecture | [design-patterns.md](design-patterns.md) | DP | ⏭ later | 13 | 0 / 38 | 0 / 29 |
-| **Total** | | | | **228** | **24 / 620** | **0 / 518** |
+| **Total** | | | | **228** | **24 / 621** | **0 / 518** |
 
 ## Order
 ```

@@ -42,6 +42,22 @@ Where: `docker run -it --rm ubuntu:24.04 bash` (then `apt update && apt install 
 ### Lab 2 — weeks 1–2: harden `sat-app` by hand
 *(details added when LX 12 starts: deploy user, SSH keys only, root login off, `ufw`, `fail2ban`, `unattended-upgrades`, a Go binary as a systemd service)*
 
+### Lab 3 — OPS 22.12 + 4.3: GitLab for the work project (2026-11-12)
+Real setup, not a simulation: `gitlab.com/sattech-uz/erp/sat-erp`. Note: `notes/devops/22-gitlab-cicd.md`.
+- [x] Group `sattech-uz` (company), subgroup `erp`, private project `sat-erp`
+- [x] 2FA enforced on the group; own 2FA on, recovery codes saved
+- [x] Group: no sharing outside, Pages public access off, customer relations off, user cap
+- [x] Monorepo skeleton `backend/ frontend/ contracts/ deploy/` (commit `5b2231f`)
+- [x] `main` protected — direct push rejected (`pre-receive hook declined`)
+- [ ] Protected tag `v*` (Maintainers)
+- [ ] MR settings (fast-forward, squash require, threads, delete branch)
+- [ ] Instance runners off; project runner on the laptop (docker executor) — green
+- [ ] First `.gitlab-ci.yml` through a **branch + MR** (lint → test → build)
+- [ ] "Pipelines must succeed" on after the first green pipeline
+
+**Done when:** every box is ticked and you can answer the 10 recall questions of the note without looking.
+**L2 stretch:** add `workflow:rules` so a branch with an open MR gets only one pipeline; add `resource_group` + `environment` to a dummy deploy job and see the Environments page.
+
 ## Results
 | Lab | Date | Result / notes |
 |---|---|---|
