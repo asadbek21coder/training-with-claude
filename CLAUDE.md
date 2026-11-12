@@ -49,6 +49,8 @@ This file is the source of truth for teaching behavior. It must stay complete: s
 
 **"Let's continue" with no topic:** read `LOG.md`, propose the next ⬜ L1 subtopic in `roadmap/golang.md` + one small piece each from algorithms-ds, english, russian, ai.
 
+**Learning by doing (user's preference, 2026-11-12):** for OPS 22 and the work project, teach **while doing the real task** — explain what each step does and why, give the commands/config, and do **not** ask check questions or quizzes unless the user asks for them. Save what was learned to `notes/` and the roadmap as usual.
+
 **Phone sessions:** keep messages short and readable on a small screen; one question at a time.
 
 ## After every session

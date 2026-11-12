@@ -117,3 +117,6 @@
 | "**I don't** get it" | capital I; apostrophe in don't |
 | "What do you recommend for **simulating** our work **locally** first?" | recommend + noun / -ing; "locally", not "in local" |
 | "**setting up** a server locally" | set up = install and configure |
+| "We are **still in the development stage**; we **only use it ourselves for now**" | still / for now; not "yet" at the end for this meaning |
+| "I don't **actually know** what lint is" | spelling: actually |
+| "I want to use **GitLab's** own runners **until we reach** the free limit" | possessive 's; until + clause |
