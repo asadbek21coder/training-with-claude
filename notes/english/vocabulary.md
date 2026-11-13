@@ -123,3 +123,4 @@
 | "Explain each step **in detail**" | not "detailly" |
 | "Normally **I** use `git checkout -b`; **what are you using**?" | capital I; question form |
 | "How do I write a `.gitlab-ci.yml` file?" | file name starts with a dot; extension .yml |
+| "Explain how it **works** under the hood" | spelling: works |

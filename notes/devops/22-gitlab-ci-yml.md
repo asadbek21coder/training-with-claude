@@ -40,3 +40,11 @@ RU: «Пайплайн GitLab описывается в `.gitlab-ci.yml` в ко
 4. Inside one rule vs between rules — AND or OR?
 5. Why move `GOPATH` into `$CI_PROJECT_DIR`?
 6. Where do secrets go, and why never in this file?
+
+## Under the hood (2026-11-13, after the first local run)
+EN:
+- `gitlab-ci-local` = parse YAML → validate against GitLab's JSON schema → fill defaults (stage `test`, `when: on_success`, `allow_failure: false`) → run. **No `image:` → it runs in the host shell**; with `image:` → in a Docker container.
+- Real GitLab: push → server reads the file at that commit, applies `workflow`/`rules`, creates pipeline + jobs (pending); **GitLab runs nothing itself**. The runner **polls** the API and pulls a job (script, image, variables, one-time `CI_JOB_TOKEN`). Docker executor: pull image → **helper container** (git clone, cache, artifacts) → **build container** from `image` runs `script` line by line → log streamed live → exit code decides pass/fail → containers removed.
+- The runner only makes outgoing calls, so a runner on a laptop or behind a firewall needs no open ports.
+RU: GitLab только создаёт пайплайн и джобы; раннер сам опрашивает API и забирает задание с одноразовым токеном. Docker-исполнитель: helper-контейнер (git, кэш, артефакты) + рабочий контейнер из `image`; лог стримится; код выхода решает статус; контейнеры удаляются. Без `image` gitlab-ci-local запускает джоб прямо в shell хоста.
+Gotcha: GitLab looks for the exact name `.gitlab-ci.yml` — `.gitlab-ci.yaml` is ignored. `ls` hides dot-files (`ls -a`). VS Code creates a file only on save.
