@@ -120,3 +120,6 @@
 | "We are **still in the development stage**; we **only use it ourselves for now**" | still / for now; not "yet" at the end for this meaning |
 | "I don't **actually know** what lint is" | spelling: actually |
 | "I want to use **GitLab's** own runners **until we reach** the free limit" | possessive 's; until + clause |
+| "Explain each step **in detail**" | not "detailly" |
+| "Normally **I** use `git checkout -b`; **what are you using**?" | capital I; question form |
+| "How do I write a `.gitlab-ci.yml` file?" | file name starts with a dot; extension .yml |
