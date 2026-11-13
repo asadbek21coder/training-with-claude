@@ -49,10 +49,10 @@ Real setup, not a simulation: `gitlab.com/sattech-uz/erp/sat-erp`. Note: `notes/
 - [x] Group: no sharing outside, Pages public access off, customer relations off, user cap
 - [x] Monorepo skeleton `backend/ frontend/ contracts/ deploy/` (commit `5b2231f`)
 - [x] `main` protected — direct push rejected (`pre-receive hook declined`)
-- [ ] Protected tag `v*` (Maintainers)
+- [x] Protected tag `v*` (Maintainers)
 - [ ] MR settings (fast-forward, squash require, threads, delete branch)
-- [ ] Instance runners off; project runner on the laptop (docker executor) — green
-- [ ] First `.gitlab-ci.yml` through a **branch + MR** (lint → test → build)
+- [x] Runners: GitLab shared (instance) runners for CI until the free minutes run out (decision 2026-11-12); own runner later for deploy jobs (`sat-deploy` tag)
+- [x] First `.gitlab-ci.yml` through a **branch + MR** — MR !1 merged 2026-11-13, pipeline #3063348590 green on `main` (only `secrets:gitleaks` until backend/frontend code exists)
 - [ ] "Pipelines must succeed" on after the first green pipeline
 
 **Done when:** every box is ticked and you can answer the 10 recall questions of the note without looking.
