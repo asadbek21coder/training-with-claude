@@ -8,7 +8,7 @@
 | Track | File | Prefix | Role now | Topics | L1 done / total | L2 done / total |
 |---|---|---|---|---|---|---|
 | Go | [golang.md](golang.md) | GO | 🔥 **main** | 24 | 1 / 85 | 0 / 72 (+ L3 book: 0 / 33) |
-| Algorithms & DS | [algorithms-ds.md](algorithms-ds.md) | DSA | 📅 daily | 20 | 13 / 47 | 0 / 42 |
+| Algorithms & DS | [algorithms-ds.md](algorithms-ds.md) | DSA | 📅 daily (+ DSA 21 timed practice after Go L1) | 21 | 13 / 49 | 0 / 45 |
 | English | [english.md](english.md) | EN | 📅 daily | 8 | 0 / 24 | 0 / 14 |
 | Russian | [russian.md](russian.md) | RU | 📅 daily | 14 | 2 / 41 | 0 / 30 |
 | PostgreSQL & data stores | [postgres.md](postgres.md) | PG | ⏭ next | 15 | 0 / 40 | 0 / 50 |
@@ -21,7 +21,7 @@
 | Common SWE (Git, auth, crypto, security, API design, career) | [common-swe.md](common-swe.md) | SWE | ⏭ later | 15 | 0 / 50 | 0 / 40 |
 | QA & testing | [qa.md](qa.md) | QA | ⏭ later | 19 | 0 / 44 | 0 / 27 |
 | Design patterns & architecture | [design-patterns.md](design-patterns.md) | DP | ⏭ later | 13 | 0 / 38 | 0 / 29 |
-| **Total** | | | | **228** | **24 / 621** | **0 / 518** |
+| **Total** | | | | **229** | **24 / 623** | **0 / 521** |
 
 ## Order
 ```

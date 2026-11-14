@@ -9,8 +9,8 @@
 ## Progress
 | Layer | Done | Total |
 |---|---|---|
-| L1 | 13 | 47 |
-| L2 | 0 | 42 |
+| L1 | 13 | 49 |
+| L2 | 0 | 45 |
 
 ---
 
@@ -280,3 +280,20 @@
 - ⬜ **20.3 Performing under pressure** — 45-minute timed practice, mock interviews, testing code by hand, recovering from mistakes, follow-up questions (scale, streaming input, memory limits), clean Go style in interviews, communicating trade-offs
 
 🛠 **Practice** — L1: solve one unseen problem while speaking every step out loud (record it) · L2: run a timed 45-minute mock with 2 problems and follow-up questions, then write what went wrong
+
+---
+
+## DSA 21 — Timed problem practice (FAANG prep)
+> Starts **after Go L1**. 3–4 days a week, 45–60 min, **no AI, no autocomplete**, timer on. Problem list: **NeetCode 150** (public, grouped by pattern) + ~30 extra from LeetCode company-tagged lists. Target ≈ **180 problems** in ~6 months. Every attempt goes into `code/algorithms-ds/practice-log.md`.
+
+**L1 — aware & can use**
+- ⬜ **21.1 Practice rules** — timer (easy 15 min, medium 25–30, hard 45), no AI/autocomplete, method from DSA 20 out loud, stuck 20+ min → read the idea only, then code it yourself, log every attempt (pattern, time, solved alone / with hint / failed)
+- ⬜ **21.2 Phase 1 — pattern blocks (~100 problems)** — solve by pattern, easy → medium: arrays & hashing, two pointers, sliding window, stack, binary search, linked list, trees, heap, backtracking, graphs (BFS/DFS, union-find), 1-D DP; goal: recognize the pattern in < 3 minutes
+
+**L2 — deep & efficient**
+- ⬜ **21.3 Phase 2 — mixed timed mediums (~60 problems)** — random pattern, unknown topic, 30-minute limit, full method out loud, edge cases tested by hand before running; goal: ≥ 70% solved alone in time
+- ⬜ **21.4 Phase 3 — mock interviews (~20 sessions)** — 45 minutes, 2 problems or 1 hard, interviewer follow-ups (scale, memory, streaming input), 2-D DP, intervals, tries, Dijkstra / topological sort; goal: clean Go code + correct complexity in time
+- ⬜ **21.5 Spaced review** — re-solve every failed or hinted problem after 3, 7 and 21 days without looking at the old solution; a problem is "done" only after a clean re-solve
+
+🛠 **Practice** — L1: first 10 problems of the arrays & hashing block, logged with time and outcome · L2: weekly scorecard from the log (solved alone %, average time per difficulty, weakest pattern) and next week's focus picked from it
+
