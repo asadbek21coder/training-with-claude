@@ -50,10 +50,10 @@ Real setup, not a simulation: `gitlab.com/sattech-uz/erp/sat-erp`. Note: `notes/
 - [x] Monorepo skeleton `backend/ frontend/ contracts/ deploy/` (commit `5b2231f`)
 - [x] `main` protected — direct push rejected (`pre-receive hook declined`)
 - [x] Protected tag `v*` (Maintainers)
-- [ ] MR settings (fast-forward, squash require, threads, delete branch)
+- [x] MR settings (fast-forward, squash require, threads, delete branch) — 2026-11-14
 - [x] Runners: GitLab shared (instance) runners for CI until the free minutes run out (decision 2026-11-12); own runner later for deploy jobs (`sat-deploy` tag)
 - [x] First `.gitlab-ci.yml` through a **branch + MR** — MR !1 merged 2026-11-13, pipeline #3063348590 green on `main` (only `secrets:gitleaks` until backend/frontend code exists)
-- [ ] "Pipelines must succeed" on after the first green pipeline
+- [x] "Pipelines must succeed" on — proven 2026-11-14 with MR !4 (`ci-broken-test`): invalid YAML → pipeline failed (`yaml invalid`, 0 jobs) → "Merge blocked: Pipeline must succeed"; fixed in the Pipeline editor → pipeline passed → "Ready to merge". MR closed without merging (test only).
 
 **Done when:** every box is ticked and you can answer the 10 recall questions of the note without looking.
 **L2 stretch:** add `workflow:rules` so a branch with an open MR gets only one pipeline; add `resource_group` + `environment` to a dummy deploy job and see the Environments page.
