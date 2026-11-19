@@ -13,6 +13,7 @@ When a work task needs something (deploy, CI, DNS), that task *is* the day's pra
 
 ## Resources (free unless marked)
 ### Networking (priority)
+- **cdCTF.uz** (Uzbek/Russian/English, free) — 23-chapter networking curriculum, Wireshark module, CTFs, labs. Personal plan: `reference/cdctf-plan.md`
 - **Kurose & Ross video lectures** — short 5–15 min videos, chapter by chapter: https://gaia.cs.umass.edu/kurose_ross/lectures.php · Wireshark labs: https://gaia.cs.umass.edu/kurose_ross/wireshark.php
 - **High Performance Browser Networking** (Ilya Grigorik, free online book): https://hpbn.co — TCP, TLS, HTTP/2, latency, for backend people
 - **Cloudflare Learning Center**: https://www.cloudflare.com/learning/ — DNS, CDN, DDoS, TLS in plain words
