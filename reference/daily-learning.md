@@ -29,4 +29,4 @@ When a work task needs something (deploy, CI, DNS), that task *is* the day's pra
 ### AI
 - Anthropic courses: https://github.com/anthropics/courses · Simon Willison's blog: https://simonwillison.net
 ### DSA
-- NeetCode (YouTube + neetcode.io list)
+- **NeetCode Pro** (subscription) — courses + problems in Go, plan: `reference/neetcode-plan.md`
